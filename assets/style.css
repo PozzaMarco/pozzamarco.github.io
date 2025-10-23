@@ -20,44 +20,8 @@ body {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--ink);
-  /* Enhanced Animated Geometric Pattern */
-  background: 
-    /* Animated geometric overlays */
-    radial-gradient(circle at 20% 80%, rgba(255,180,0,0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255,180,0,0.06) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(255,180,0,0.04) 0%, transparent 50%),
-    /* Subtle grid pattern */
-    linear-gradient(rgba(255,180,0,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,180,0,0.02) 1px, transparent 1px),
-    /* Base gradient + your original */
-    radial-gradient(1200px 800px at 70% -10%, rgba(255,180,0,0.06), transparent 40%),
-    var(--bg);
-  background-size: 800px 800px, 800px 800px, 800px 800px, 100px 100px, 100px 100px, 1px 1px;
-  background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
-  animation: gradientShift 25s ease-in-out infinite;
+  background: radial-gradient(1200px 800px at 70% -10%, rgba(255,180,0,0.06), transparent 40%), var(--bg);
   line-height: 1.65;
-  position: relative;
-}
-
-/* Animated Geometric Pattern Keyframes */
-@keyframes gradientShift {
-  0%, 100% { 
-    transform: translateX(0) translateY(0) scale(1); 
-  }
-  33% { 
-    transform: translateX(30px) translateY(-20px) scale(1.02); 
-  }
-  66% { 
-    transform: translateX(-20px) translateY(25px) scale(1.01); 
-  }
-}
-
-/* Ensures smooth performance & respects user preferences */
-@media (prefers-reduced-motion: reduce) {
-  body {
-    animation: none;
-    background-position: 0 0;
-  }
 }
 
 /* ===== Nav ===== */
