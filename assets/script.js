@@ -1,31 +1,31 @@
 /*
-  Portfolio logic
+  AI Portfolio Script
+  -------------------
   - Loads publications from data/publications.json
-  - Renders Swiper slides (Bookshelf)
+  - Builds bookshelf dynamically
   - Handles modal open/close
-  - Simple filters (year dropdown + query search)
+  - Supports filters and keyboard navigation
 */
 
 const state = { publications: [], filtered: [], swiper: null };
-
 const el = (sel) => document.querySelector(sel);
-const els = (sel) => document.querySelectorAll(sel);
 
-// Initialize
-window.addEventListener('DOMContentLoaded', async () => {
-  // Footer year
-  el('#year').textContent = new Date().getFullYear();
+// ========== INIT ==========
+window.addEventListener("DOMContentLoaded", async () => {
+  // Update footer year
+  const yearEl = el("#year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   // Load publications
   try {
-    const res = await fetch('data/publications.json', { cache: 'no-store' });
+    const res = await fetch("data/publications.json", { cache: "no-store" });
     state.publications = await res.json();
-  } catch (e) {
-    console.error('Failed to load publications.json', e);
+  } catch (err) {
+    console.error("❌ Failed to load publications.json", err);
     state.publications = [];
   }
 
-  // Sort by year desc (then title)
+  // Sort newest first
   state.publications.sort((a, b) => (b.year - a.year) || a.title.localeCompare(b.title));
   state.filtered = [...state.publications];
 
@@ -34,125 +34,139 @@ window.addEventListener('DOMContentLoaded', async () => {
   initFilters();
 });
 
+// ========== FILTERS ==========
 function populateYearFilter(items) {
-  const years = Array.from(new Set(items.map(p => p.year))).sort((a,b) => b - a);
-  const select = el('#filter-year');
-  const anyOpt = document.createElement('option'); anyOpt.value = ''; anyOpt.textContent = 'All';
-  select.appendChild(anyOpt);
-  years.forEach(y => { const o = document.createElement('option'); o.value = y; o.textContent = y; select.appendChild(o); });
+  const select = el("#filter-year");
+  if (!select) return;
+
+  const years = [...new Set(items.map(p => p.year))].sort((a, b) => b - a);
+  select.innerHTML = `<option value="">All</option>` + years.map(y => `<option value="${y}">${y}</option>`).join("");
 }
 
 function initFilters() {
-  el('#filter-year').addEventListener('change', applyFilters);
-  el('#filter-query').addEventListener('input', applyFilters);
+  const yearSel = el("#filter-year");
+  const queryInput = el("#filter-query");
+  if (yearSel) yearSel.addEventListener("change", applyFilters);
+  if (queryInput) queryInput.addEventListener("input", applyFilters);
 }
 
 function applyFilters() {
-  const byYear = el('#filter-year').value;
-  const q = el('#filter-query').value.trim().toLowerCase();
+  const yearVal = el("#filter-year")?.value || "";
+  const query = el("#filter-query")?.value.trim().toLowerCase() || "";
 
   state.filtered = state.publications.filter(p => {
-    const yearOk = !byYear || String(p.year) === byYear;
-    const hay = `${p.title} ${p.authors ?? ''} ${p.abstract ?? ''} ${p.venue ?? ''}`.toLowerCase();
-    const qOk = !q || hay.includes(q);
-    return yearOk && qOk;
+    const matchYear = !yearVal || String(p.year) === yearVal;
+    const text = `${p.title} ${p.authors ?? ""} ${p.abstract ?? ""} ${p.venue ?? ""}`.toLowerCase();
+    const matchQuery = !query || text.includes(query);
+    return matchYear && matchQuery;
   });
 
   renderShelf(state.filtered);
 }
 
+// ========== BOOKSHELF RENDERING ==========
 function renderShelf(items) {
-  const wrapper = el('#shelf-wrapper');
-  wrapper.innerHTML = '';
+  const wrapper = el("#shelf-wrapper");
+  if (!wrapper) return;
+  wrapper.innerHTML = "";
 
-  items.forEach((p, idx) => {
-    const slide = document.createElement('div');
-    slide.className = 'swiper-slide';
+  items.forEach((p) => {
+    const slide = document.createElement("div");
+    slide.className = "swiper-slide";
 
-    const card = document.createElement('article');
-    card.className = 'book';
-    card.setAttribute('role', 'button');
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', `Open: ${p.title}`);
-
+    const card = document.createElement("article");
+    card.className = "book";
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
     card.innerHTML = `
-      <div class="book__spine" aria-hidden="true"></div>
+      <div class="book__spine"></div>
       <div class="book__title">${escapeHTML(p.title)}</div>
-      <div class="book__meta">${escapeHTML(p.authors || '')}</div>
-      <div class="book__abstract">${escapeHTML(p.abstract || '')}</div>
+      <div class="book__meta">${escapeHTML(p.authors || "")}</div>
+      <div class="book__abstract">${escapeHTML(p.abstract || "")}</div>
       <div class="book__actions">
-        <span class="book__year">${p.year || ''}</span>
-        <button class="book__btn" data-index="${idx}">Details</button>
+        <span class="book__year">${p.year || ""}</span>
+        <button class="book__btn">Details</button>
       </div>
     `;
-
-    // Open modal on click/keyboard
-    card.addEventListener('click', () => openModal(p));
-    card.addEventListener('keypress', (e) => { if (e.key === 'Enter') openModal(p); });
+    card.querySelector(".book__btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      openModal(p);
+    });
+    card.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") openModal(p);
+    });
 
     slide.appendChild(card);
     wrapper.appendChild(slide);
   });
 
-  // (Re)initialize Swiper
+  // Initialize or refresh Swiper
   if (state.swiper) state.swiper.destroy(true, true);
-  state.swiper = new Swiper('.swiper', {
+  state.swiper = new Swiper(".swiper", {
     slidesPerView: 1.15,
     spaceBetween: 16,
-    centeredSlides: false,
     breakpoints: {
       600: { slidesPerView: 2.2 },
       900: { slidesPerView: 3.3 },
-      1100:{ slidesPerView: 4.2 }
+      1100: { slidesPerView: 4.2 },
     },
     keyboard: { enabled: true },
     mousewheel: { forceToAxis: true },
-    pagination: { el: '.swiper-pagination', clickable: true },
-    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+    pagination: { el: ".swiper-pagination", clickable: true },
+    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
   });
 }
 
-function openModal(p) {
-  el('#paper-title').textContent = p.title || '';
-  el('#paper-authors').textContent = p.authors || '';
-  el('#paper-venue').textContent = [p.venue, p.year].filter(Boolean).join(' · ');
-  el('#paper-abstract').textContent = p.abstract || '';
+// ========== MODAL ==========
+function openModal(paper) {
+  const modal = el("#paper-modal");
+  if (!modal) return;
 
-  const doiBtn = el('#paper-doi');
-  if (p.doi) {
-    const doiUrl = p.doi.startsWith('http') ? p.doi : `https://doi.org/${p.doi}`;
-    doiBtn.href = doiUrl;
-    doiBtn.style.display = 'inline-block';
-  } else {
-    doiBtn.removeAttribute('href');
-    doiBtn.style.display = 'none';
+  el("#paper-title").textContent = paper.title || "";
+  el("#paper-authors").textContent = paper.authors || "";
+  el("#paper-venue").textContent = [paper.venue, paper.year].filter(Boolean).join(" · ");
+  el("#paper-abstract").textContent = paper.abstract || "";
+
+  const doiEl = el("#paper-doi");
+  if (doiEl) {
+    if (paper.doi) {
+      doiEl.href = paper.doi.startsWith("http") ? paper.doi : `https://doi.org/${paper.doi}`;
+      doiEl.style.display = "inline-block";
+    } else doiEl.style.display = "none";
   }
 
-  const linkBtn = el('#paper-link');
-  if (p.link) {
-    linkBtn.href = p.link;
-    linkBtn.style.display = 'inline-block';
-  } else {
-    linkBtn.removeAttribute('href');
-    linkBtn.style.display = 'none';
+  const linkEl = el("#paper-link");
+  if (linkEl) {
+    if (paper.link) {
+      linkEl.href = paper.link;
+      linkEl.style.display = "inline-block";
+    } else linkEl.style.display = "none";
   }
 
-  const modal = el('#paper-modal');
-  modal.setAttribute('aria-hidden', 'false');
-
-  // Close handlers
-  els('[data-close-modal]').forEach(btn => btn.onclick = closeModal);
-  document.addEventListener('keydown', escToClose);
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden"; // prevent background scroll
+  modal.querySelectorAll("[data-close-modal]").forEach((btn) => btn.onclick = closeModal);
+  document.addEventListener("keydown", escToClose);
 }
 
 function closeModal() {
-  const modal = el('#paper-modal');
-  modal.setAttribute('aria-hidden', 'true');
-  document.removeEventListener('keydown', escToClose);
+  const modal = el("#paper-modal");
+  if (!modal) return;
+  modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+  document.removeEventListener("keydown", escToClose);
 }
 
-function escToClose(e) { if (e.key === 'Escape') closeModal(); }
+function escToClose(e) {
+  if (e.key === "Escape") closeModal();
+}
 
-function escapeHTML(s) {
-  return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m]));
+function escapeHTML(str) {
+  return str.replace(/[&<>\"']/g, (ch) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  }[ch]));
 }
