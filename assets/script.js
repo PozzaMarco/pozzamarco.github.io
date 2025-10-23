@@ -156,6 +156,27 @@ function openModal(paper) {
   document.body.style.overflow = "hidden"; // prevent background scroll
   modal.querySelectorAll("[data-close-modal]").forEach((btn) => btn.onclick = closeModal);
   document.addEventListener("keydown", escToClose);
+  // === Copy BibTeX button logic ===
+  const bibBtn = el("#copy-bibtex");
+  if (bibBtn) {
+    bibBtn.onclick = () => {
+      let bibtex = paper.bibtex;
+      if (!bibtex) {
+        // fallback simple citation if no BibTeX field
+        bibtex = `@article{${(paper.authors?.split(" ")[0] || "ref")}${paper.year || ""},
+    title={${paper.title}},
+    author={${paper.authors}},
+    year={${paper.year}},
+    journal={${paper.venue || ""}}
+  }`;
+      }
+
+      navigator.clipboard.writeText(bibtex).then(() => {
+        bibBtn.textContent = "Copied ✅";
+        setTimeout(() => (bibBtn.textContent = "Copy BibTeX"), 2000);
+      });
+    };
+  }
 }
 
 function closeModal() {
