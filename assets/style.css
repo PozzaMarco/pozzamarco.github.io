@@ -51,7 +51,13 @@ section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
 .hero__subtitle { color: var(--muted); margin: 0 0 12px; }
 .hero__tagline strong { color: var(--ink); background: linear-gradient(transparent 70%, rgba(255,180,0,0.35) 0); }
 .hero__buttons { margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap; }
-.scroll-indicator { text-align: center; color: var(--muted); }
+.scroll-indicator {
+  grid-column: 1 / -1;      
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 20px;
+}
 
 /* ===== Buttons ===== */
 .btn { display: inline-block; padding: 10px 14px; border-radius: 10px; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
@@ -68,9 +74,6 @@ section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
 .filter span { display: block; font-size: 0.8rem; color: var(--muted); }
 .filter select, .filter input { padding: 10px; border-radius: 10px; border: 1px solid var(--line); background: #0f1319; color: var(--ink); }
 
-/* Swiper container styling */
-.swiper { width: 100%; padding: 18px 6px 42px; border-radius: 18px; background: linear-gradient(180deg, #171b22, #141821); box-shadow: var(--shadow); position: relative; border: 1px solid var(--line); }
-
 /* Each book card */
 .book { height: 260px; width: 210px; background: linear-gradient(180deg, #1b2029, #151a22);
   border: 1px solid var(--line); border-radius: 14px; padding: 16px; position: relative; overflow: hidden;
@@ -86,14 +89,67 @@ section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
 .book__year { font-size: 0.8rem; color: var(--muted); }
 
 /* ===== Modal ===== */
-.modal { position: fixed; inset: 0; display: none; z-index: 9999;}
-.modal[aria-hidden="false"] { display: grid; place-items: center; }
-.modal__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.55); }
-.modal__dialog { position: relative; z-index: 1; width: min(720px, 92vw); background: #141821; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--line); }
-.modal__close { position: absolute; right: 12px; top: 10px; border: none; background: transparent; font-size: 28px; cursor: pointer; color: var(--muted); }
-.modal__content { padding: 24px; }
-.modal__content h3 { margin-top: 0; font-family: "Playfair Display", serif; color: var(--ink); }
-.modal__links { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 9999; /* ensures it appears above Swiper */
+}
+
+.modal[aria-hidden="false"] {
+  display: grid;
+  place-items: center;
+}
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65); /* darker dimming */
+  backdrop-filter: blur(4px);      /* optional soft blur */
+  z-index: 9998;
+}
+
+.modal__dialog {
+  position: relative;
+  z-index: 10000; /* ensure dialog is above the backdrop */
+  width: min(720px, 92vw);
+  background: #141821;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
+}
+
+.modal__close {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.modal__content {
+  padding: 24px;
+}
+
+.modal__content h3 {
+  margin-top: 0;
+  font-family: "Playfair Display", serif;
+  color: var(--ink);
+}
+
+.modal__links {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+/* Swiper container styling */
+.swiper { width: 100%; padding: 18px 6px 42px; border-radius: 18px; background: linear-gradient(180deg, #171b22, #141821); box-shadow: var(--shadow); position: relative; border: 1px solid var(--line); }
 
 /* ===== About / CV / Contact ===== */
 .about, .cv, .contact { background: transparent; }
