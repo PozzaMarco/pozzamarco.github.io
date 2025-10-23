@@ -78,6 +78,7 @@ function renderShelf(items) {
     card.className = "book";
     card.tabIndex = 0;
     card.setAttribute("role", "button");
+    card.setAttribute("aria-label", `Open: ${p.title}`);
     card.innerHTML = `
       <div class="book__spine"></div>
       <div class="book__title">${escapeHTML(p.title)}</div>
@@ -88,19 +89,26 @@ function renderShelf(items) {
         <button class="book__btn">Details</button>
       </div>
     `;
-    card.querySelector(".book__btn").addEventListener("click", (e) => {
-      e.stopPropagation();
-      openModal(p);
-    });
+
+    // 🔹 Make entire card clickable
+    card.addEventListener("click", () => openModal(p));
+
+    // 🔹 Keyboard accessibility (Enter key)
     card.addEventListener("keypress", (e) => {
       if (e.key === "Enter") openModal(p);
+    });
+
+    // 🔹 Prevent double opening when clicking "Details"
+    card.querySelector(".book__btn").addEventListener("click", (e) => {
+      e.stopPropagation(); // prevent event bubbling
+      openModal(p);
     });
 
     slide.appendChild(card);
     wrapper.appendChild(slide);
   });
 
-  // Initialize or refresh Swiper
+  // 🔹 Initialize or refresh Swiper
   if (state.swiper) state.swiper.destroy(true, true);
   state.swiper = new Swiper(".swiper", {
     slidesPerView: 1.15,
@@ -116,6 +124,7 @@ function renderShelf(items) {
     navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
   });
 }
+
 
 // ========== MODAL ==========
 function openModal(paper) {
