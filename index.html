@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matteo Pozza — AI for Chronic Diseases</title>
+  <meta name="description" content="PhD portfolio: AI for chronic diseases, publications, CV, contact." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+  <!-- Swiper (carousel) CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+  <link rel="stylesheet" href="assets/style.css?v=2" />
+</head>
+<body>
+  <!-- ===== Nav ===== -->
+  <header class="nav">
+    <div class="nav__brand">Matteo Pozza</div>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#bookshelf">Bookshelf</a>
+      <a href="#cv">CV</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ===== Hero / Intro ===== -->
+  <section class="hero" id="home">
+    <img class="hero__photo" src="assets/images/photo.jpg" alt="Portrait of Matteo Pozza" />
+    <div class="hero__content">
+      <h1 class="hero__title">Artificial Intelligence for Chronic Diseases</h1>
+      <p class="hero__subtitle">PhD Student — Brain, Mind & Computer Science, University of Padua</p>
+      <p class="hero__tagline">Exploring how <strong>Artificial Intelligence</strong> can transform diagnosis and management through multimodal data and interpretable models.</p>
+      <div class="hero__buttons">
+        <a class="btn btn--accent" href="#bookshelf">Explore the Bookshelf</a>
+        <a class="btn btn--ghost" href="#contact">Get in Touch</a>
+      </div>
+    </div>
+    <div class="scroll-indicator" aria-hidden="true">▼ Scroll</div>
+  </section>
+
+  <!-- ===== Bookshelf (Centerpiece) ===== -->
+  <section class="bookshelf" id="bookshelf" aria-label="Publications Bookshelf">
+    <div class="section-head">
+      <h2>Publications & Research</h2>
+      <p class="muted">Browse the shelf. Select a paper to view details, DOI, and full text.</p>
+    </div>
+
+    <!-- Filter row (optional, easy to extend) -->
+    <div class="filters" role="group" aria-label="Filters">
+      <label class="filter">
+        <span>Year</span>
+        <select id="filter-year" aria-label="Filter by year"></select>
+      </label>
+      <label class="filter">
+        <span>Search</span>
+        <input id="filter-query" type="search" placeholder="Title, author, keyword…" aria-label="Search publications" />
+      </label>
+    </div>
+
+    <!-- Swiper container -->
+    <div class="swiper" id="shelf">
+      <div class="swiper-wrapper" id="shelf-wrapper">
+        <!-- Slides injected by script.js from data/publications.json -->
+      </div>
+
+      <!-- Navigation arrows -->
+      <div class="swiper-button-prev" aria-label="Previous"></div>
+      <div class="swiper-button-next" aria-label="Next"></div>
+
+      <!-- Pagination dots -->
+      <div class="swiper-pagination" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- ===== About ===== -->
+  <section class="about" id="about">
+    <div class="section-head">
+      <h2>About & Research Focus</h2>
+    </div>
+    <p>
+      I’m a PhD student in the Brain, Mind & Computer Science program at the University of Padua. My work focuses on
+      <strong>AI for chronic diseases</strong>, with emphasis on multimodal learning, clinical time series, and model interpretability.
+    </p>
+    <p>
+      I collaborate with clinicians and engineers to develop reproducible pipelines that can be translated into robust decision support.
+    </p>
+  </section>
+
+  <!-- ===== CV ===== -->
+  <section class="cv" id="cv">
+    <div class="section-head">
+      <h2>Curriculum Vitae</h2>
+    </div>
+    <p>Download my full CV for details on education, skills, awards, and experience.</p>
+    <a class="btn btn--ghost" href="assets/Matteo_Pozza_CV.pdf" download>Download CV (PDF)</a>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section class="contact" id="contact">
+    <div class="section-head">
+      <h2>Contact</h2>
+    </div>
+    <ul class="contact__list" aria-label="Contact links">
+      <li><a href="mailto:your.email@unipd.it">your.email@unipd.it</a></li>
+      <li><a href="https://github.com/yourhandle" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a></li>
+      <li><a href="https://orcid.org/" target="_blank" rel="noopener">ORCID</a></li>
+      <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <p>© <span id="year"></span> Matteo Pozza · Built with ♥ and GitHub Pages</p>
+  </footer>
+
+  <!-- Modal (Paper details) -->
+  <div class="modal" id="paper-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="paper-title">
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__dialog" role="document">
+      <button class="modal__close" aria-label="Close" data-close-modal>&times;</button>
+      <div class="modal__content">
+        <h3 id="paper-title"></h3>
+        <p id="paper-authors" class="muted"></p>
+        <p id="paper-venue" class="muted"></p>
+        <p id="paper-abstract"></p>
+        <div class="modal__links">
+          <a id="paper-doi" class="btn btn--link" target="_blank" rel="noopener">DOI ↗</a>
+          <a id="paper-link" class="btn btn--accent" target="_blank" rel="noopener">Full text / Publisher ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <!-- App script -->
+  <script src="assets/script.js"></script>
+</body>
+</html>

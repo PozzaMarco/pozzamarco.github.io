@@ -1,0 +1,29 @@
+[
+{
+"title": "Multimodal AI for COPD Progression",
+"authors": "M. Pozza, V. Sakkalis, et al.",
+"abstract": "We propose a deep learning framework that integrates imaging and clinical time series to forecast COPD trajectories and support personalized interventions.",
+"doi": "10.1234/j.aihealth.2024.0015",
+"link": "https://doi.org/10.1234/j.aihealth.2024.0015",
+"venue": "Journal of AI in Health",
+"year": 2024
+},
+{
+"title": "Interpretable Transformers for Clinical Time Series",
+"authors": "M. Pozza, A. Rossi, et al.",
+"abstract": "An interpretable transformer architecture for irregularly-sampled clinical time series with attention mechanisms aligned to clinician insight.",
+"doi": "10.1000/j.clinml.2023.042",
+"link": "https://arxiv.org/abs/2301.01234",
+"venue": "MICCAI",
+"year": 2023
+},
+{
+"title": "Bias Auditing in Multimodal Healthcare Models",
+"authors": "M. Pozza, L. Bianchi, et al.",
+"abstract": "A systematic evaluation protocol to assess and mitigate demographic bias in multimodal diagnostic models.",
+"doi": "10.5555/xyz.2022.987",
+"link": "https://openaccess.thecvf.com/",
+"venue": "NeurIPS Workshop",
+"year": 2022
+}
+]
