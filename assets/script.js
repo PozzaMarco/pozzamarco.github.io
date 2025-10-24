@@ -38,7 +38,6 @@ window.addEventListener("DOMContentLoaded", async () => {
 function populateYearFilter(items) {
   const select = el("#filter-year");
   if (!select) return;
-
   const years = [...new Set(items.map(p => p.year))].sort((a, b) => b - a);
   select.innerHTML = `<option value="">All</option>` + years.map(y => `<option value="${y}">${y}</option>`).join("");
 }
@@ -53,14 +52,12 @@ function initFilters() {
 function applyFilters() {
   const yearVal = el("#filter-year")?.value || "";
   const query = el("#filter-query")?.value.trim().toLowerCase() || "";
-
   state.filtered = state.publications.filter(p => {
     const matchYear = !yearVal || String(p.year) === yearVal;
     const text = `${p.title} ${p.authors ?? ""} ${p.abstract ?? ""} ${p.venue ?? ""}`.toLowerCase();
     const matchQuery = !query || text.includes(query);
     return matchYear && matchQuery;
   });
-
   renderShelf(state.filtered);
 }
 
@@ -90,17 +87,17 @@ function renderShelf(items) {
       </div>
     `;
 
-    // 🔹 Make entire card clickable
+    // Entire card clickable
     card.addEventListener("click", () => openModal(p));
 
-    // 🔹 Keyboard accessibility (Enter key)
-    card.addEventListener("keypress", (e) => {
+    // Keyboard accessibility (Enter key)
+    card.addEventListener("keydown", (e) => {
       if (e.key === "Enter") openModal(p);
     });
 
-    // 🔹 Prevent double opening when clicking "Details"
+    // Prevent double opening when clicking "Details"
     card.querySelector(".book__btn").addEventListener("click", (e) => {
-      e.stopPropagation(); // prevent event bubbling
+      e.stopPropagation();
       openModal(p);
     });
 
@@ -108,23 +105,20 @@ function renderShelf(items) {
     wrapper.appendChild(slide);
   });
 
-  // 🔹 Initialize or refresh Swiper
+  // Initialize or refresh Swiper
   if (state.swiper) state.swiper.destroy(true, true);
-  state.swiper = new Swiper(".swiper", {
-    slidesPerView: 1.15,
-    spaceBetween: 16,
-    breakpoints: {
-      600: { slidesPerView: 2.2 },
-      900: { slidesPerView: 3.3 },
-      1100: { slidesPerView: 4.2 },
-    },
-    keyboard: { enabled: true },
-    mousewheel: { forceToAxis: true },
-    pagination: { el: ".swiper-pagination", clickable: true },
-    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-  });
+  if (window.Swiper) {
+    state.swiper = new Swiper(".swiper", {
+      slidesPerView: 1.15,
+      spaceBetween: 16,
+      breakpoints: { 600: { slidesPerView: 2.2 }, 900: { slidesPerView: 3.3 }, 1100: { slidesPerView: 4.2 } },
+      keyboard: { enabled: true },
+      mousewheel: { forceToAxis: true },
+      pagination: { el: ".swiper-pagination", clickable: true },
+      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+    });
+  }
 }
-
 
 // ========== MODAL ==========
 function openModal(paper) {
@@ -153,24 +147,23 @@ function openModal(paper) {
   }
 
   modal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden"; // prevent background scroll
-  modal.querySelectorAll("[data-close-modal]").forEach((btn) => btn.onclick = closeModal);
+  document.body.style.overflow = "hidden";
+  modal.querySelectorAll("[data-close-modal]").forEach((btn) => (btn.onclick = closeModal));
   document.addEventListener("keydown", escToClose);
-  // === Copy BibTeX button logic ===
+
+  // Copy BibTeX
   const bibBtn = el("#copy-bibtex");
   if (bibBtn) {
     bibBtn.onclick = () => {
       let bibtex = paper.bibtex;
       if (!bibtex) {
-        // fallback simple citation if no BibTeX field
         bibtex = `@article{${(paper.authors?.split(" ")[0] || "ref")}${paper.year || ""},
-    title={${paper.title}},
-    author={${paper.authors}},
-    year={${paper.year}},
-    journal={${paper.venue || ""}}
-  }`;
+  title={${paper.title}},
+  author={${paper.authors}},
+  year={${paper.year}},
+  journal={${paper.venue || ""}}
+}`;
       }
-
       navigator.clipboard.writeText(bibtex).then(() => {
         bibBtn.textContent = "Copied ✅";
         setTimeout(() => (bibBtn.textContent = "Copy BibTeX"), 2000);
@@ -192,11 +185,7 @@ function escToClose(e) {
 }
 
 function escapeHTML(str) {
-  return str.replace(/[&<>\"']/g, (ch) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
+  return String(str).replace(/[&<>\"']/g, (ch) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[ch]));
 }

@@ -5,23 +5,59 @@
   - Matches the provided reference aesthetic
 */
 :root {
-  --bg: #0f1115;        /* page background */
-  --panel: #161a20;     /* cards/panels */
-  --ink: #eaeaea;       /* primary text */
-  --muted: #9aa0a6;     /* secondary text */
-  --line: #2a2f37;      /* hairline borders */
-  --accent: #ffb400;    /* pure amber */
+  --bg: #0f1115;
+  --panel: #161a20;
+  --ink: #eaeaea;
+  --muted: #9aa0a6;
+  --line: #2a2f37;
+  --accent: #ffb400;
   --accent-ink: #0b0d11;
   --shadow: 0 14px 40px rgba(0,0,0,0.35);
 }
 * { box-sizing: border-box; }
 html, body { height: 100%; }
+
+/* ===== AI-Themed Neural Background (single source of truth) ===== */
 body {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--ink);
-  background: radial-gradient(1200px 800px at 70% -10%, rgba(255,180,0,0.06), transparent 40%), var(--bg);
+  background-color: #0f1115;
+  background-image:
+    radial-gradient(1200px 800px at 70% -10%, rgba(255,180,0,0.06), transparent 40%),
+    radial-gradient(circle at 20% 80%, rgba(255,180,0,0.12) 0%, transparent 60%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 60%),
+    linear-gradient(160deg, #0f1115 0%, #141821 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* overlay: glowing nodes + diagonal arcs */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.3;
+  background-image:
+    radial-gradient(circle at 10% 10%, var(--accent) 0.9px, transparent 1.8px),
+    radial-gradient(circle at 30% 60%, var(--accent) 0.9px, transparent 1.8px),
+    radial-gradient(circle at 70% 30%, var(--accent) 0.9px, transparent 1.8px),
+    radial-gradient(circle at 90% 80%, var(--accent) 0.9px, transparent 1.8px),
+    repeating-linear-gradient(45deg,  rgba(255,180,0,0.18) 0px, rgba(255,180,0,0.18) 1px, transparent 1px, transparent 90px),
+    repeating-linear-gradient(-45deg, rgba(255,180,0,0.18) 0px, rgba(255,180,0,0.18) 1px, transparent 1px, transparent 90px);
+  background-size:
+    250px 250px, 300px 300px, 280px 280px, 260px 260px,
+    200px 200px, 200px 200px;
+  animation: networkFlow 60s linear infinite;
+}
+@keyframes networkFlow {
+  0%   { background-position: 0px 0px, 200px 100px, 400px 300px, 600px 400px, 0px 0px, 0px 0px; }
+  50%  { background-position: 100px 50px, 300px 200px, 500px 350px, 700px 500px, 50px 50px, 50px 50px; }
+  100% { background-position: 0px 0px, 200px 100px, 400px 300px, 600px 400px, 0px 0px, 0px 0px; }
 }
 
 /* ===== Nav ===== */
@@ -43,32 +79,20 @@ section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; position: relat
 .section-head .muted { color: var(--muted); margin-top: 0; }
 .muted { color: var(--muted); }
 
-/* ===== Animated accent line under each section ===== */
+/* Animated accent line under each section (center-out) */
 section::after {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
+  bottom: 0; left: 0;
+  width: 100%; height: 2px;
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
   animation: pulseLine 4s ease-in-out infinite;
   opacity: 0.25;
-  transform-origin: center; /* key for center expansion */
+  transform-origin: center;
 }
-
-/* Pulse grows from center to sides */
 @keyframes pulseLine {
-  0%, 100% {
-    transform: scaleX(0);
-    opacity: 0.15;
-    transform-origin: center;
-  }
-  50% {
-    transform: scaleX(1);
-    opacity: 0.8;
-    transform-origin: center;
-  }
+  0%, 100% { transform: scaleX(0); opacity: 0.15; transform-origin: center; }
+  50%      { transform: scaleX(1); opacity: 0.8;  transform-origin: center; }
 }
 
 /* ===== Hero ===== */
@@ -76,39 +100,22 @@ section::after {
 .hero__content { grid-column: 2 / 3; }
 .hero__photo {
   grid-column: 1 / 2;
-  width: 170px;
-  height: 170px;
-  border-radius: 50%;
-  object-fit: cover;
-  filter: grayscale(100%);
-  border: 4px solid var(--accent);
-  outline: 8px solid rgba(255,180,0,0.08);
+  width: 170px; height: 170px;
+  border-radius: 50%; object-fit: cover; filter: grayscale(100%);
+  border: 4px solid var(--accent); outline: 8px solid rgba(255,180,0,0.08);
   box-shadow: 0 0 40px rgba(255,180,0,0.25);
   transition: box-shadow 4s ease-in-out;
   animation: photoGlow 6s ease-in-out infinite;
 }
-
-/* Soft breathing glow animation */
 @keyframes photoGlow {
-  0%, 100% {
-    box-shadow: 0 0 35px rgba(255,180,0,0.25);
-  }
-  50% {
-    box-shadow: 0 0 60px rgba(255,180,0,0.4);
-  }
+  0%, 100% { box-shadow: 0 0 35px rgba(255,180,0,0.25); }
+  50%      { box-shadow: 0 0 60px rgba(255,180,0,0.4); }
 }
-
 .hero__title { font-family: "Playfair Display", serif; font-size: 2.6rem; margin: 6px 0 8px; color: var(--ink); }
 .hero__subtitle { color: var(--muted); margin: 0 0 12px; }
 .hero__tagline strong { color: var(--ink); background: linear-gradient(transparent 70%, rgba(255,180,0,0.35) 0); }
 .hero__buttons { margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap; }
-.scroll-indicator {
-  grid-column: 1 / -1;      
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.9rem;
-  margin-top: 20px;
-}
+.scroll-indicator { grid-column: 1 / -1; text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 20px; }
 
 /* ===== Buttons ===== */
 .btn { display: inline-block; padding: 10px 14px; border-radius: 10px; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
@@ -124,8 +131,8 @@ section::after {
 .filters { display: flex; gap: 16px; align-items: center; margin: 16px 0 24px; flex-wrap: wrap; }
 .filter span { display: block; font-size: 0.8rem; color: var(--muted); }
 .filter select, .filter input { padding: 10px; border-radius: 10px; border: 1px solid var(--line); background: #0f1319; color: var(--ink); }
+.swiper { width: 100%; padding: 18px 6px 42px; border-radius: 18px; background: linear-gradient(180deg, #171b22, #141821); box-shadow: var(--shadow); position: relative; border: 1px solid var(--line); }
 
-/* Each book card */
 .book { height: 260px; width: 210px; background: linear-gradient(180deg, #1b2029, #151a22);
   border: 1px solid var(--line); border-radius: 14px; padding: 16px; position: relative; overflow: hidden;
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
@@ -140,67 +147,14 @@ section::after {
 .book__year { font-size: 0.8rem; color: var(--muted); }
 
 /* ===== Modal ===== */
-
-.modal {
-  position: fixed;
-  inset: 0;
-  display: none;
-  z-index: 9999; /* ensures it appears above Swiper */
-}
-
-.modal[aria-hidden="false"] {
-  display: grid;
-  place-items: center;
-}
-
-.modal__backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.65); /* darker dimming */
-  backdrop-filter: blur(4px);      /* optional soft blur */
-  z-index: 9998;
-}
-
-.modal__dialog {
-  position: relative;
-  z-index: 10000; /* ensure dialog is above the backdrop */
-  width: min(720px, 92vw);
-  background: #141821;
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--line);
-}
-
-.modal__close {
-  position: absolute;
-  right: 12px;
-  top: 10px;
-  border: none;
-  background: transparent;
-  font-size: 28px;
-  cursor: pointer;
-  color: var(--muted);
-}
-
-.modal__content {
-  padding: 24px;
-}
-
-.modal__content h3 {
-  margin-top: 0;
-  font-family: "Playfair Display", serif;
-  color: var(--ink);
-}
-
-.modal__links {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-  flex-wrap: wrap;
-}
-
-/* Swiper container styling */
-.swiper { width: 100%; padding: 18px 6px 42px; border-radius: 18px; background: linear-gradient(180deg, #171b22, #141821); box-shadow: var(--shadow); position: relative; border: 1px solid var(--line); }
+.modal { position: fixed; inset: 0; display: none; z-index: 9999; }
+.modal[aria-hidden="false"] { display: grid; place-items: center; }
+.modal__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(4px); z-index: 9998; }
+.modal__dialog { position: relative; z-index: 10000; width: min(720px, 92vw); background: #141821; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--line); }
+.modal__close { position: absolute; right: 12px; top: 10px; border: none; background: transparent; font-size: 28px; cursor: pointer; color: var(--muted); }
+.modal__content { padding: 24px; }
+.modal__content h3 { margin-top: 0; font-family: "Playfair Display", serif; color: var(--ink); }
+.modal__links { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
 
 /* ===== About / CV / Contact ===== */
 .about, .cv, .contact { background: transparent; }
@@ -222,89 +176,4 @@ section::after {
 }
 
 /* ===== Reduced motion ===== */
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
-}
-
-/* ===== AI-Themed Neural Background ===== */
-body {
-  /* Base dark gradient */
-  background-color: #0f1115;
-  background-image:
-    radial-gradient(circle at 20% 80%, rgba(255,180,0,0.12) 0%, transparent 60%),
-    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 60%),
-    linear-gradient(160deg, #0f1115 0%, #141821 100%);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  color: var(--ink);
-  overflow-x: hidden;
-}
-
-/* Overlay a mesh of faint glowing arcs + nodes */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.3; /* slightly stronger */
-  background-image:
-    /* glowing nodes */
-    radial-gradient(circle at 10% 10%, var(--accent) 0.9px, transparent 1.8px),
-    radial-gradient(circle at 30% 60%, var(--accent) 0.9px, transparent 1.8px),
-    radial-gradient(circle at 70% 30%, var(--accent) 0.9px, transparent 1.8px),
-    radial-gradient(circle at 90% 80%, var(--accent) 0.9px, transparent 1.8px),
-
-    /* visible arcs / lines */
-    repeating-linear-gradient(
-      45deg,
-      rgba(255,180,0,0.18) 0px,
-      rgba(255,180,0,0.18) 1px,
-      transparent 1px,
-      transparent 90px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      rgba(255,180,0,0.18) 0px,
-      rgba(255,180,0,0.18) 1px,
-      transparent 1px,
-      transparent 90px
-    );
-
-  background-size:
-    250px 250px, 300px 300px, 280px 280px, 260px 260px, /* node sizes */
-    200px 200px, 200px 200px; /* grid line frequency */
-  animation: networkFlow 60s linear infinite;
-}
-
-
-/* Animated gentle movement — as if data is flowing */
-@keyframes networkFlow {
-  0% {
-    background-position:
-      0px 0px,
-      200px 100px,
-      400px 300px,
-      600px 400px,
-      0px 0px,
-      0px 0px;
-  }
-  50% {
-    background-position:
-      100px 50px,
-      300px 200px,
-      500px 350px,
-      700px 500px,
-      50px 50px,
-      50px 50px;
-  }
-  100% {
-    background-position:
-      0px 0px,
-      200px 100px,
-      400px 300px,
-      600px 400px,
-      0px 0px,
-      0px 0px;
-  }
-}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }

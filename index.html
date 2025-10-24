@@ -9,11 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="assets/images/favicon.png">
-
-  <!-- Swiper (carousel) CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-
-  <link rel="stylesheet" href="assets/style.css?v=2" />
+  <link rel="stylesheet" href="assets/style.css?v=3" />
 </head>
 <body>
   <!-- ===== Nav ===== -->
@@ -29,7 +26,7 @@
 
   <!-- ===== Hero / Intro ===== -->
   <section class="hero" id="home">
-    <img class="hero__photo" src="assets/images/photo.jpg" alt="Portrait of Marco Pozza" />
+    <img class="hero__photo" src="assets/images/photo.jpg" alt="Portrait of Marco Pozza" loading="eager" />
     <div class="hero__content">
       <h1 class="hero__title">Artificial Intelligence for Chronic Diseases</h1>
       <p class="hero__subtitle">PhD Student — Brain, Mind & Computer Science, University of Padua</p>
@@ -49,7 +46,6 @@
       <p class="muted">Browse the shelf. Select a paper to view details, DOI, and full text.</p>
     </div>
 
-    <!-- Filter row (optional, easy to extend) -->
     <div class="filters" role="group" aria-label="Filters">
       <label class="filter">
         <span>Year</span>
@@ -61,17 +57,10 @@
       </label>
     </div>
 
-    <!-- Swiper container -->
     <div class="swiper" id="shelf">
-      <div class="swiper-wrapper" id="shelf-wrapper">
-        <!-- Slides injected by script.js from data/publications.json -->
-      </div>
-
-      <!-- Navigation arrows -->
+      <div class="swiper-wrapper" id="shelf-wrapper"><!-- slides injected --></div>
       <div class="swiper-button-prev" aria-label="Previous"></div>
       <div class="swiper-button-next" aria-label="Next"></div>
-
-      <!-- Pagination dots -->
       <div class="swiper-pagination" aria-hidden="true"></div>
     </div>
   </section>
@@ -81,13 +70,9 @@
     <div class="section-head">
       <h2>About & Research Focus</h2>
     </div>
-    <p>
-      I’m a PhD student in the Brain, Mind & Computer Science program at the University of Padua. My work focuses on
-      <strong>AI for chronic diseases</strong>, with emphasis on multimodal learning, clinical time series, and model interpretability.
-    </p>
-    <p>
-      I collaborate with clinicians and engineers to develop reproducible pipelines that can be translated into robust decision support.
-    </p>
+    <p>I’m a PhD student in the Brain, Mind & Computer Science program at the University of Padua. My work focuses on
+      <strong>AI for chronic diseases</strong>, with emphasis on multimodal learning, clinical time series, and model interpretability.</p>
+    <p>I collaborate with clinicians and engineers to develop reproducible pipelines that can be translated into robust decision support.</p>
   </section>
 
   <!-- ===== CV ===== -->
@@ -107,7 +92,6 @@
     <ul class="contact__list" aria-label="Contact links">
       <li><a href="mailto:marco.pozza.3@phd.unipd.it">marco.pozza.3@phd.unipd.it</a></li>
       <li><a href="https://github.com/PozzaMarco" target="_blank" rel="noopener">GitHub</a></li>
-      <!--<li><a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a></li>-->
       <li><a href="https://orcid.org/0009-0004-5798-0297" target="_blank" rel="noopener">ORCID</a></li>
       <li><a href="https://www.linkedin.com/in/marco-pozza-3ab072171/" target="_blank" rel="noopener">LinkedIn</a></li>
     </ul>
@@ -137,9 +121,7 @@
     </div>
   </div>
 
-  <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-  <!-- App script -->
-  <script src="assets/script.js"></script>
+  <script src="assets/script.js?v=2"></script>
 </body>
 </html>
