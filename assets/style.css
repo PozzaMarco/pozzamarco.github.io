@@ -150,7 +150,26 @@ section::after {
 .modal { position: fixed; inset: 0; display: none; z-index: 9999; }
 .modal[aria-hidden="false"] { display: grid; place-items: center; }
 .modal__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(4px); z-index: 9998; }
-.modal__dialog { position: relative; z-index: 10000; width: min(720px, 92vw); background: #141821; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--line); }
+.modal__dialog {
+  position: relative;
+  z-index: 10000;
+  width: min(720px, 92vw);
+  max-height: 85vh; /* limit height to viewport */
+  overflow-y: auto; /* enable internal scroll */
+  background: #141821;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--accent) #141821;
+}
+.modal__dialog::-webkit-scrollbar {
+  width: 6px;
+}
+.modal__dialog::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: 6px;
+}
 .modal__close { position: absolute; right: 12px; top: 10px; border: none; background: transparent; font-size: 28px; cursor: pointer; color: var(--muted); }
 .modal__content { padding: 24px; }
 .modal__content h3 { margin-top: 0; font-family: "Playfair Display", serif; color: var(--ink); }
