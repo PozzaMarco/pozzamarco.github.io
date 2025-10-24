@@ -130,12 +130,19 @@ function openModal(paper) {
   el("#paper-venue").textContent = [paper.venue, paper.year].filter(Boolean).join(" · ");
   el("#paper-abstract").textContent = paper.abstract || "";
 
-  const doiEl = el("#paper-doi");
-  if (doiEl) {
+  const doiBtn = el("#copy-doi");
+  if (doiBtn) {
     if (paper.doi) {
-      doiEl.href = paper.doi.startsWith("http") ? paper.doi : `https://doi.org/${paper.doi}`;
-      doiEl.style.display = "inline-block";
-    } else doiEl.style.display = "none";
+      doiBtn.style.display = "inline-block";
+      doiBtn.onclick = () => {
+        navigator.clipboard.writeText(paper.doi).then(() => {
+          doiBtn.textContent = "Copied ✅";
+          setTimeout(() => (doiBtn.textContent = "Copy DOI"), 2000);
+        });
+      };
+    } else {
+      doiBtn.style.display = "none";
+    }
   }
 
   const linkEl = el("#paper-link");
