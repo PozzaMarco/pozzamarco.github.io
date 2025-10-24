@@ -11,21 +11,40 @@ const state = { publications: [], filtered: [], swiper: null };
 const el = (sel) => document.querySelector(sel);
 
 // ========== INIT ==========
-window.addEventListener("DOMContentLoaded", async () => {
-  // Update footer year
-  const yearEl = el("#year");
+async function loadContent(section, file) {
+  try {
+    const res = await fetch(`content/${file}`);
+    const html = await res.text();
+    const container = el(`#content-${section}`);
+    if (container) container.innerHTML = html;
+  } catch (err) {
+    console.error(`⚠️ Failed to load ${file}:`, err);
+  }
+}
+
+// === Initialize when DOM is ready ===
+window.addEventListener('DOMContentLoaded', async () => {
+  // Footer year
+  const yearEl = el('#year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Load publications
+  // === Load external section content ===
+  await Promise.all([
+    loadContent('about', 'about.html'),
+    loadContent('cv', 'cv.html'),
+    loadContent('contact', 'contact.html')
+  ]);
+
+  // === Load publications ===
   try {
-    const res = await fetch("data/publications.json", { cache: "no-store" });
+    const res = await fetch('data/publications.json', { cache: 'no-store' });
     state.publications = await res.json();
-  } catch (err) {
-    console.error("❌ Failed to load publications.json", err);
+  } catch (e) {
+    console.error('❌ Failed to load publications.json', e);
     state.publications = [];
   }
 
-  // Sort newest first
+  // Sort and render
   state.publications.sort((a, b) => (b.year - a.year) || a.title.localeCompare(b.title));
   state.filtered = [...state.publications];
 
@@ -33,6 +52,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   renderShelf(state.filtered);
   initFilters();
 });
+
 
 // ========== FILTERS ==========
 function populateYearFilter(items) {
