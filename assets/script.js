@@ -130,21 +130,6 @@ function openModal(paper) {
   el("#paper-venue").textContent = [paper.venue, paper.year].filter(Boolean).join(" · ");
   el("#paper-abstract").textContent = paper.abstract || "";
 
-  const doiBtn = el("#copy-doi");
-  if (doiBtn) {
-    if (paper.doi) {
-      doiBtn.style.display = "inline-block";
-      doiBtn.onclick = () => {
-        navigator.clipboard.writeText(paper.doi).then(() => {
-          doiBtn.textContent = "Copied ✅";
-          setTimeout(() => (doiBtn.textContent = "Copy DOI"), 2000);
-        });
-      };
-    } else {
-      doiBtn.style.display = "none";
-    }
-  }
-
   const linkEl = el("#paper-link");
   if (linkEl) {
     if (paper.link) {
