@@ -132,22 +132,27 @@ function renderShelf(items) {
   }
 
   // Event delegation: handle clicks on wrapper instead of individual cards
-  wrapper.addEventListener("click", (e) => {
-    const card = e.target.closest(".book");
-    if (card && card.dataset.paperIndex !== undefined) {
-      openModal(state.filtered[parseInt(card.dataset.paperIndex)]);
-    }
-  });
-
-  // Event delegation: keyboard navigation
-  wrapper.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
+  // Only attach once (check if already attached)
+  if (!wrapper.dataset.listenersAttached) {
+    wrapper.addEventListener("click", (e) => {
       const card = e.target.closest(".book");
       if (card && card.dataset.paperIndex !== undefined) {
         openModal(state.filtered[parseInt(card.dataset.paperIndex)]);
       }
-    }
-  });
+    });
+
+    // Event delegation: keyboard navigation
+    wrapper.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const card = e.target.closest(".book");
+        if (card && card.dataset.paperIndex !== undefined) {
+          openModal(state.filtered[parseInt(card.dataset.paperIndex)]);
+        }
+      }
+    });
+    
+    wrapper.dataset.listenersAttached = "true";
+  }
 }
 
 // ========== MODAL ==========
