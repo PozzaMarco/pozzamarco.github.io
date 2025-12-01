@@ -295,7 +295,7 @@ section::after {
   left: 50%;
   width: 18px;
   height: 18px;
-  background: transparent;
+  background: var(--bg);
   border: 3px solid var(--accent);
   border-radius: 50%;
   transform: translateX(-50%);
