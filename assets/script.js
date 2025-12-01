@@ -7,8 +7,17 @@
   - Supports filters and keyboard navigation
 */
 
-const state = { publications: [], filtered: [], swiper: null };
+const state = { publications: [], filtered: [], swiper: null, focusableElements: [] };
 const el = (sel) => document.querySelector(sel);
+
+// Debounce utility to limit function calls
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
 
 // ========== INIT ==========
 window.addEventListener("DOMContentLoaded", async () => {
@@ -16,13 +25,23 @@ window.addEventListener("DOMContentLoaded", async () => {
   const yearEl = el("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  // Show loading state
+  const wrapper = el("#shelf-wrapper");
+  if (wrapper) {
+    wrapper.innerHTML = '<div class="loading-state">Loading publications...</div>';
+  }
+
   // Load publications
   try {
     const res = await fetch("data/publications.json", { cache: "no-store" });
     state.publications = await res.json();
   } catch (err) {
     console.error("❌ Failed to load publications.json", err);
+    if (wrapper) {
+      wrapper.innerHTML = '<div class="error-state">Failed to load publications. Please refresh the page.</div>';
+    }
     state.publications = [];
+    return;
   }
 
   // Sort newest first
@@ -46,7 +65,8 @@ function initFilters() {
   const yearSel = el("#filter-year");
   const queryInput = el("#filter-query");
   if (yearSel) yearSel.addEventListener("change", applyFilters);
-  if (queryInput) queryInput.addEventListener("input", applyFilters);
+  // Debounce search input for better performance
+  if (queryInput) queryInput.addEventListener("input", debounce(applyFilters, 300));
 }
 
 function applyFilters() {
@@ -87,19 +107,8 @@ function renderShelf(items) {
       </div>
     `;
 
-    // Entire card clickable
-    card.addEventListener("click", () => openModal(p));
-
-    // Keyboard accessibility (Enter key)
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") openModal(p);
-    });
-
-    // Prevent double opening when clicking "Details"
-    card.querySelector(".book__btn").addEventListener("click", (e) => {
-      e.stopPropagation();
-      openModal(p);
-    });
+    // Store paper data on card for event delegation
+    card.dataset.paperIndex = state.filtered.indexOf(p);
 
     slide.appendChild(card);
     wrapper.appendChild(slide);
@@ -118,6 +127,24 @@ function renderShelf(items) {
       navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
     });
   }
+
+  // Event delegation: handle clicks on wrapper instead of individual cards
+  wrapper.addEventListener("click", (e) => {
+    const card = e.target.closest(".book");
+    if (card && card.dataset.paperIndex !== undefined) {
+      openModal(state.filtered[parseInt(card.dataset.paperIndex)]);
+    }
+  });
+
+  // Event delegation: keyboard navigation
+  wrapper.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const card = e.target.closest(".book");
+      if (card && card.dataset.paperIndex !== undefined) {
+        openModal(state.filtered[parseInt(card.dataset.paperIndex)]);
+      }
+    }
+  });
 }
 
 // ========== MODAL ==========
@@ -142,6 +169,34 @@ function openModal(paper) {
   document.body.style.overflow = "hidden";
   modal.querySelectorAll("[data-close-modal]").forEach((btn) => (btn.onclick = closeModal));
   document.addEventListener("keydown", escToClose);
+
+  // Focus trap: get all focusable elements in modal
+  state.focusableElements = modal.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+  const firstFocusable = state.focusableElements[0];
+  const lastFocusable = state.focusableElements[state.focusableElements.length - 1];
+
+  // Focus first element
+  if (firstFocusable) firstFocusable.focus();
+
+  // Trap focus within modal
+  modal.addEventListener("keydown", handleFocusTrap);
+
+  function handleFocusTrap(e) {
+    if (e.key !== "Tab") return;
+    if (e.shiftKey) {
+      if (document.activeElement === firstFocusable) {
+        lastFocusable.focus();
+        e.preventDefault();
+      }
+    } else {
+      if (document.activeElement === lastFocusable) {
+        firstFocusable.focus();
+        e.preventDefault();
+      }
+    }
+  }
 
   // Copy BibTeX
   const bibBtn = el("#copy-bibtex");
@@ -170,6 +225,12 @@ function closeModal() {
   modal.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
   document.removeEventListener("keydown", escToClose);
+  // Clean up focus trap
+  modal.removeEventListener("keydown", handleFocusTrap);
+}
+
+function handleFocusTrap(e) {
+  // This will be redefined in openModal with proper closure
 }
 
 function escToClose(e) {

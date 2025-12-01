@@ -1,0 +1,10 @@
+# robots.txt for pozzamarco.github.io
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://pozzamarco.github.io/sitemap.xml
+
+# Disallow unnecessary directories (if any in future)
+# Disallow: /private/

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 - Page Not Found | Marco Pozza</title>
+  <meta name="description" content="The page you're looking for doesn't exist." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <style>
+    :root {
+      --bg: #0f1115;
+      --ink: #eaeaea;
+      --muted: #9aa0a6;
+      --accent: #ffb400;
+      --accent-ink: #0b0d11;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(160deg, #0f1115 0%, #141821 100%);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+    }
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 8rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 40px rgba(255,180,0,0.4);
+    }
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+    p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--accent);
+      color: var(--accent-ink);
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 26px rgba(255,180,0,0.35);
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(255,180,0,0.45);
+    }
+    .btn:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 5rem; }
+      h2 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>404</h1>
+    <h2>Page Not Found</h2>
+    <p>
+      The page you're looking for doesn't exist or has been moved.
+      Let's get you back on track.
+    </p>
+    <a href="/" class="btn">Return Home</a>
+  </div>
+</body>
+</html>
