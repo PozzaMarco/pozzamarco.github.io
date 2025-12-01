@@ -1,0 +1,58 @@
+[
+  {
+    "year": "2021-Present",
+    "title": "PhD in Brain, Mind, and Computer Science",
+    "subtitle": "University of Padua × Fondazione Bruno Kessler (FBK)",
+    "description": "Doctoral research on AI-driven prediction and management of chronic diseases, particularly COPD. Developing digital health tools combining machine learning, human-centered design, and psychological insights.",
+    "type": "position"
+  },
+  {
+    "year": "2025",
+    "title": "Artificial Intelligence Methods for COPD Exacerbations",
+    "subtitle": "Healthcare Journal - Umbrella Review",
+    "description": "Published comprehensive review synthesizing evidence on AI-driven prediction of COPD exacerbations and effectiveness of digital health interventions.",
+    "type": "publication"
+  },
+  {
+    "year": "2024",
+    "title": "Cross-Patient EEG Seizure Prediction Review",
+    "subtitle": "Journal of Neural Engineering",
+    "description": "Systematic review of patient-independent validation methods for epileptic seizure prediction. PROSPERO registered protocol (CRD4202452317).",
+    "type": "publication"
+  },
+  {
+    "year": "2024",
+    "title": "Deep Learning for EEG Seizure Forecasting",
+    "subtitle": "BIOSTEC Conference",
+    "description": "Compared LSTM and CNN architectures for predicting seizures up to 30 minutes in advance using continuous multi-channel EEG recordings from 29 patients.",
+    "type": "publication"
+  },
+  {
+    "year": "2023-2024",
+    "title": "Collaboration on hvEEGNet Model",
+    "subtitle": "University of Trieste - Dr. Cisotto",
+    "description": "Evaluating novel EEG signal reconstruction model's robustness to noise and artifacts. Joint publication planned on performance and diagnostic applications.",
+    "type": "collaboration"
+  },
+  {
+    "year": "2023",
+    "title": "M.Sc. in Artificial Intelligence",
+    "subtitle": "University of Padua",
+    "description": "Specialized in machine learning and neural networks with focus on healthcare applications. Thesis on deep learning for biomedical signal processing.",
+    "type": "education"
+  },
+  {
+    "year": "2022-2023",
+    "title": "Research on EEG-Based Epilepsy Prediction",
+    "subtitle": "Ca' Foscari University of Venice",
+    "description": "Developed deep learning models for EEG-based epilepsy prediction and explored large language models for cognitive analysis.",
+    "type": "position"
+  },
+  {
+    "year": "2020",
+    "title": "B.Sc. in Computer Science",
+    "subtitle": "University of Padua",
+    "description": "Foundation in algorithms, data structures, and software engineering. First exposure to AI and machine learning concepts.",
+    "type": "education"
+  }
+]

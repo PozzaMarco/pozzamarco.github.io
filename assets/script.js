@@ -51,6 +51,9 @@ window.addEventListener("DOMContentLoaded", async () => {
   populateYearFilter(state.publications);
   renderShelf(state.filtered);
   initFilters();
+  
+  // Load and render timeline
+  loadTimeline();
 });
 
 // ========== FILTERS ==========
@@ -241,4 +244,54 @@ function escapeHTML(str) {
   return String(str).replace(/[&<>\"']/g, (ch) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[ch]));
+}
+
+// ========== TIMELINE ==========
+async function loadTimeline() {
+  const container = el("#timeline-container");
+  if (!container) return;
+
+  try {
+    const res = await fetch("data/timeline.json", { cache: "no-store" });
+    const timeline = await res.json();
+    renderTimeline(timeline);
+  } catch (err) {
+    console.error("❌ Failed to load timeline.json", err);
+    container.innerHTML = '<div class="error-state">Failed to load timeline.</div>';
+  }
+}
+
+function renderTimeline(items) {
+  const container = el("#timeline-container");
+  if (!container) return;
+
+  container.innerHTML = items.map((item) => `
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <span class="timeline-year">${escapeHTML(item.year)}</span>
+        <h3 class="timeline-title">${escapeHTML(item.title)}</h3>
+        <p class="timeline-subtitle">${escapeHTML(item.subtitle)}</p>
+        <p class="timeline-description">${escapeHTML(item.description)}</p>
+        <span class="timeline-type timeline-type--${item.type}">${item.type}</span>
+      </div>
+    </div>
+  `).join("");
+  
+  // Trigger animation on scroll
+  observeTimeline();
+}
+
+function observeTimeline() {
+  const timelineItems = document.querySelectorAll('.timeline-item');
+  
+  // Reset animation for items not yet in view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  timelineItems.forEach(item => observer.observe(item));
 }
