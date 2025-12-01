@@ -150,6 +150,8 @@ section::after {
 .filter span { display: block; font-size: 0.8rem; color: var(--muted); }
 .filter select, .filter input { padding: 10px; border-radius: 10px; border: 1px solid var(--line); background: #0f1319; color: var(--ink); }
 .swiper { width: 100%; padding: 18px 6px 42px; border-radius: 18px; background: linear-gradient(180deg, #171b22, #141821); box-shadow: var(--shadow); position: relative; border: 1px solid var(--line); }
+.swiper-wrapper { display: flex; }
+.swiper-slide { flex-shrink: 0; }
 
 .book { height: 260px; width: 210px; background: linear-gradient(180deg, #1b2029, #151a22);
   border: 1px solid var(--line); border-radius: 14px; padding: 16px; position: relative; overflow: hidden;
