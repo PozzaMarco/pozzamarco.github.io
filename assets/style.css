@@ -149,7 +149,7 @@ section::after {
 .filters { display: flex; gap: 16px; align-items: center; margin: 16px 0 24px; flex-wrap: wrap; }
 .filter span { display: block; font-size: 0.8rem; color: var(--muted); }
 .filter select, .filter input { padding: 10px; border-radius: 10px; border: 1px solid var(--line); background: #0f1319; color: var(--ink); }
-.swiper { width: 100%; padding: 18px 6px 42px; border-radius: 18px; background: linear-gradient(180deg, #171b22, #141821); box-shadow: var(--shadow); position: relative; border: 1px solid var(--line); }
+.swiper { width: 100%; max-width: 100%; padding: 18px 6px 42px; border-radius: 18px; background: linear-gradient(180deg, #171b22, #141821); box-shadow: var(--shadow); position: relative; border: 1px solid var(--line); }
 .swiper-wrapper { display: flex; }
 .swiper-slide { flex-shrink: 0; }
 
