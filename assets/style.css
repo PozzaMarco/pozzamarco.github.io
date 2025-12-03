@@ -152,6 +152,8 @@ section::after {
 .swiper { width: 100%; max-width: 100%; padding: 18px 6px 42px; border-radius: 18px; background: linear-gradient(180deg, #171b22, #141821); box-shadow: var(--shadow); position: relative; border: 1px solid var(--line); }
 .swiper-wrapper { display: flex; }
 .swiper-slide { flex-shrink: 0; }
+.swiper-button-next, .swiper-button-prev { color: var(--accent); }
+.swiper-button-next::after, .swiper-button-prev::after { font-size: 24px; }
 
 .book { height: 260px; width: 210px; background: linear-gradient(180deg, #1b2029, #151a22);
   border: 1px solid var(--line); border-radius: 14px; padding: 16px; position: relative; overflow: hidden;
