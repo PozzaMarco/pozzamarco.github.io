@@ -1,302 +1,235 @@
 /*
-  AI Portfolio Script
-  -------------------
-  - Loads publications from data/publications.json
-  - Builds bookshelf dynamically
-  - Handles modal open/close
-  - Supports filters and keyboard navigation
+  Portfolio script
+  ----------------
+  - Publications: data/publications.json → filterable list + detail dialog
+    (optional field per paper: "selected": true → shows a "Selected" badge)
+  - Timeline: data/timeline.json → single-column timeline
 */
 
-const state = { publications: [], filtered: [], swiper: null, focusableElements: [] };
-const el = (sel) => document.querySelector(sel);
+const $ = (sel, root = document) => root.querySelector(sel);
+const state = { publications: [], filtered: [], current: null, lastTrigger: null };
 
-// Debounce utility to limit function calls
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
+const ORCID_URL = "https://orcid.org/0009-0004-5798-0297";
+
+// ========== UTILS ==========
+function debounce(fn, wait) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), wait);
   };
 }
 
-// ========== INIT ==========
-window.addEventListener("DOMContentLoaded", async () => {
-  // Update footer year
-  const yearEl = el("#year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-  // Show loading state
-  const wrapper = el("#shelf-wrapper");
-  if (wrapper) {
-    wrapper.innerHTML = '<div class="loading-state">Loading publications...</div>';
-  }
-
-  // Load publications
-  try {
-    const res = await fetch("data/publications.json", { cache: "no-store" });
-    state.publications = await res.json();
-  } catch (err) {
-    console.error("❌ Failed to load publications.json", err);
-    if (wrapper) {
-      wrapper.innerHTML = '<div class="error-state">Failed to load publications. Please refresh the page.</div>';
-    }
-    state.publications = [];
-    return;
-  }
-
-  // Sort newest first
-  state.publications.sort((a, b) => (b.year - a.year) || a.title.localeCompare(b.title));
-  state.filtered = [...state.publications];
-
-  populateYearFilter(state.publications);
-  renderShelf(state.filtered);
-  initFilters();
-  
-  // Load and render timeline
-  loadTimeline();
-});
-
-// ========== FILTERS ==========
-function populateYearFilter(items) {
-  const select = el("#filter-year");
-  if (!select) return;
-  const years = [...new Set(items.map(p => p.year))].sort((a, b) => b - a);
-  select.innerHTML = `<option value="">All</option>` + years.map(y => `<option value="${y}">${y}</option>`).join("");
-}
-
-function initFilters() {
-  const yearSel = el("#filter-year");
-  const queryInput = el("#filter-query");
-  if (yearSel) yearSel.addEventListener("change", applyFilters);
-  // Debounce search input for better performance
-  if (queryInput) queryInput.addEventListener("input", debounce(applyFilters, 300));
-}
-
-function applyFilters() {
-  const yearVal = el("#filter-year")?.value || "";
-  const query = el("#filter-query")?.value.trim().toLowerCase() || "";
-  state.filtered = state.publications.filter(p => {
-    const matchYear = !yearVal || String(p.year) === yearVal;
-    const text = `${p.title} ${p.authors ?? ""} ${p.abstract ?? ""} ${p.venue ?? ""}`.toLowerCase();
-    const matchQuery = !query || text.includes(query);
-    return matchYear && matchQuery;
-  });
-  renderShelf(state.filtered);
-}
-
-// ========== BOOKSHELF RENDERING ==========
-function renderShelf(items) {
-  const wrapper = el("#shelf-wrapper");
-  if (!wrapper) return;
-  wrapper.innerHTML = "";
-
-  items.forEach((p) => {
-    const slide = document.createElement("div");
-    slide.className = "swiper-slide";
-
-    const card = document.createElement("article");
-    card.className = "book";
-    card.tabIndex = 0;
-    card.setAttribute("role", "button");
-    card.setAttribute("aria-label", `Open: ${p.title}`);
-    card.innerHTML = `
-      <div class="book__spine"></div>
-      <div class="book__title">${escapeHTML(p.title)}</div>
-      <div class="book__meta">${escapeHTML(p.authors || "")}</div>
-      <div class="book__abstract">${escapeHTML(p.abstract || "")}</div>
-      <div class="book__actions">
-        <span class="book__year">${p.year || ""}</span>
-        <button class="book__btn">Details</button>
-      </div>
-    `;
-
-    // Store paper data on card for event delegation
-    card.dataset.paperIndex = state.filtered.indexOf(p);
-
-    slide.appendChild(card);
-    wrapper.appendChild(slide);
-  });
-
-  // Initialize or refresh Swiper
-  if (state.swiper) state.swiper.destroy(true, true);
-  if (window.Swiper) {
-    state.swiper = new Swiper(".swiper", {
-      slidesPerView: 1.15,
-      spaceBetween: 16,
-      breakpoints: { 600: { slidesPerView: 2.2 }, 900: { slidesPerView: 3.3 }, 1100: { slidesPerView: 4.2 } },
-      keyboard: { enabled: true },
-      mousewheel: { forceToAxis: true },
-      pagination: { el: ".swiper-pagination", clickable: true },
-      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-    });
-  }
-
-  // Event delegation: handle clicks on wrapper instead of individual cards
-  // Only attach once (check if already attached)
-  if (!wrapper.dataset.listenersAttached) {
-    wrapper.addEventListener("click", (e) => {
-      const card = e.target.closest(".book");
-      if (card && card.dataset.paperIndex !== undefined) {
-        openModal(state.filtered[parseInt(card.dataset.paperIndex)]);
-      }
-    });
-
-    // Event delegation: keyboard navigation
-    wrapper.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        const card = e.target.closest(".book");
-        if (card && card.dataset.paperIndex !== undefined) {
-          openModal(state.filtered[parseInt(card.dataset.paperIndex)]);
-        }
-      }
-    });
-    
-    wrapper.dataset.listenersAttached = "true";
-  }
-}
-
-// ========== MODAL ==========
-function openModal(paper) {
-  const modal = el("#paper-modal");
-  if (!modal) return;
-
-  el("#paper-title").textContent = paper.title || "";
-  el("#paper-authors").textContent = paper.authors || "";
-  el("#paper-venue").textContent = [paper.venue, paper.year].filter(Boolean).join(" · ");
-  el("#paper-abstract").textContent = paper.abstract || "";
-
-  const linkEl = el("#paper-link");
-  if (linkEl) {
-    if (paper.link) {
-      linkEl.href = paper.link;
-      linkEl.style.display = "inline-block";
-    } else linkEl.style.display = "none";
-  }
-
-  modal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-  modal.querySelectorAll("[data-close-modal]").forEach((btn) => (btn.onclick = closeModal));
-  document.addEventListener("keydown", escToClose);
-
-  // Focus trap: get all focusable elements in modal
-  state.focusableElements = modal.querySelectorAll(
-    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  );
-  const firstFocusable = state.focusableElements[0];
-  const lastFocusable = state.focusableElements[state.focusableElements.length - 1];
-
-  // Focus first element
-  if (firstFocusable) firstFocusable.focus();
-
-  // Trap focus within modal
-  modal.addEventListener("keydown", handleFocusTrap);
-
-  function handleFocusTrap(e) {
-    if (e.key !== "Tab") return;
-    if (e.shiftKey) {
-      if (document.activeElement === firstFocusable) {
-        lastFocusable.focus();
-        e.preventDefault();
-      }
-    } else {
-      if (document.activeElement === lastFocusable) {
-        firstFocusable.focus();
-        e.preventDefault();
-      }
-    }
-  }
-
-  // Copy BibTeX
-  const bibBtn = el("#copy-bibtex");
-  if (bibBtn) {
-    bibBtn.onclick = () => {
-      let bibtex = paper.bibtex;
-      if (!bibtex) {
-        bibtex = `@article{${(paper.authors?.split(" ")[0] || "ref")}${paper.year || ""},
-  title={${paper.title}},
-  author={${paper.authors}},
-  year={${paper.year}},
-  journal={${paper.venue || ""}}
-}`;
-      }
-      navigator.clipboard.writeText(bibtex).then(() => {
-        bibBtn.textContent = "Copied ✅";
-        setTimeout(() => (bibBtn.textContent = "Copy BibTeX"), 2000);
-      });
-    };
-  }
-}
-
-function closeModal() {
-  const modal = el("#paper-modal");
-  if (!modal) return;
-  modal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-  document.removeEventListener("keydown", escToClose);
-  // Clean up focus trap
-  modal.removeEventListener("keydown", handleFocusTrap);
-}
-
-function handleFocusTrap(e) {
-  // This will be redefined in openModal with proper closure
-}
-
-function escToClose(e) {
-  if (e.key === "Escape") closeModal();
-}
-
 function escapeHTML(str) {
-  return String(str).replace(/[&<>\"']/g, (ch) => ({
+  return String(str ?? "").replace(/[&<>"']/g, (ch) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[ch]));
 }
 
+// Bold my name in author lists (input is already escaped)
+function highlightMe(escapedAuthors) {
+  return escapedAuthors.replace(/(Marco Pozza|M\. Pozza|Pozza, M(?:arco|\.)?)/g, "<strong>$1</strong>");
+}
+
+async function loadJSON(url) {
+  const res = await fetch(url, { cache: "no-cache" });
+  if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`);
+  return res.json();
+}
+
+// ========== INIT ==========
+document.addEventListener("DOMContentLoaded", () => {
+  const yearEl = $("#year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  initModal();
+  initPublications();
+  initTimeline();
+});
+
+// ========== PUBLICATIONS ==========
+async function initPublications() {
+  const list = $("#pub-list");
+  if (!list) return;
+
+  list.innerHTML = '<li class="state">Loading publications…</li>';
+
+  try {
+    state.publications = await loadJSON("data/publications.json");
+  } catch (err) {
+    console.error("Failed to load publications", err);
+    list.innerHTML = `<li class="state state--error">Publications could not be loaded.
+      The full list is on <a href="${ORCID_URL}" target="_blank" rel="noopener">ORCID</a>.</li>`;
+    return;
+  }
+
+  state.publications.sort(
+    (a, b) => (Number(b.year) - Number(a.year)) || String(a.title).localeCompare(String(b.title))
+  );
+
+  populateYearFilter();
+  $("#filter-year")?.addEventListener("change", applyFilters);
+  $("#filter-query")?.addEventListener("input", debounce(applyFilters, 250));
+
+  // One delegated listener; titles are real <button>s, so Enter/Space work natively
+  list.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-index]");
+    if (btn) openPaper(state.filtered[Number(btn.dataset.index)], btn);
+  });
+
+  applyFilters();
+}
+
+function populateYearFilter() {
+  const select = $("#filter-year");
+  if (!select) return;
+  const years = [...new Set(state.publications.map((p) => p.year))].sort((a, b) => b - a);
+  select.innerHTML = '<option value="">All</option>' +
+    years.map((y) => `<option value="${escapeHTML(y)}">${escapeHTML(y)}</option>`).join("");
+}
+
+function applyFilters() {
+  const yearVal = $("#filter-year")?.value || "";
+  const query = $("#filter-query")?.value.trim().toLowerCase() || "";
+
+  state.filtered = state.publications.filter((p) => {
+    const matchYear = !yearVal || String(p.year) === yearVal;
+    const text = `${p.title} ${p.authors ?? ""} ${p.abstract ?? ""} ${p.venue ?? ""}`.toLowerCase();
+    return matchYear && (!query || text.includes(query));
+  });
+
+  renderList();
+}
+
+function renderList() {
+  const list = $("#pub-list");
+  const count = $("#pub-count");
+
+  if (!state.filtered.length) {
+    list.innerHTML = '<li class="state">No publications match your filters.</li>';
+  } else {
+    list.innerHTML = state.filtered.map((p, i) => `
+      <li class="pub${p.selected ? " pub--selected" : ""}">
+        <span class="pub__year">${escapeHTML(p.year)}</span>
+        <div class="pub__body">
+          <button type="button" class="pub__title" data-index="${i}">${escapeHTML(p.title)}</button>
+          <p class="pub__meta">${highlightMe(escapeHTML(p.authors))}</p>
+          <p class="pub__venue">${escapeHTML(p.venue)}${p.selected ? ' <span class="badge">Selected</span>' : ""}</p>
+        </div>
+      </li>`).join("");
+  }
+
+  if (count) count.textContent = `${state.filtered.length} of ${state.publications.length} publications`;
+}
+
+// ========== DIALOG ==========
+// Native <dialog>: focus trap, Esc to close and the inert background come for free.
+function initModal() {
+  const dlg = $("#paper-modal");
+  if (!dlg) return;
+
+  dlg.addEventListener("click", (e) => {
+    // Click on the backdrop (the dialog element itself) or on the close button
+    if (e.target === dlg || e.target.closest("[data-close-modal]")) dlg.close();
+  });
+
+  // Give focus back to the title that opened the dialog
+  dlg.addEventListener("close", () => state.lastTrigger?.focus());
+
+  $("#copy-bibtex")?.addEventListener("click", copyBibtex);
+}
+
+function openPaper(paper, trigger) {
+  const dlg = $("#paper-modal");
+  if (!dlg || !paper) return;
+
+  state.current = paper;
+  state.lastTrigger = trigger;
+
+  $("#paper-title").textContent = paper.title || "";
+  $("#paper-authors").textContent = paper.authors || "";
+  $("#paper-venue").textContent = [paper.venue, paper.year].filter(Boolean).join(" · ");
+  $("#paper-abstract").textContent = paper.abstract || "";
+
+  const link = $("#paper-link");
+  link.hidden = !paper.link;
+  if (paper.link) link.href = paper.link;
+
+  $("#copy-bibtex").textContent = "Copy BibTeX";
+  dlg.showModal();
+}
+
+async function copyBibtex() {
+  const p = state.current;
+  if (!p) return;
+  const btn = $("#copy-bibtex");
+
+  const key = (String(p.authors || "ref").split(/[\s,]+/)[0] || "ref") + (p.year || "");
+  const bibtex = p.bibtex || `@article{${key},
+  title={${p.title || ""}},
+  author={${p.authors || ""}},
+  year={${p.year || ""}},
+  journal={${p.venue || ""}}
+}`;
+
+  try {
+    await navigator.clipboard.writeText(bibtex);
+    btn.textContent = "Copied ✓";
+  } catch {
+    btn.textContent = "Copy failed";
+  }
+  setTimeout(() => (btn.textContent = "Copy BibTeX"), 2000);
+}
+
 // ========== TIMELINE ==========
-async function loadTimeline() {
-  const container = el("#timeline-container");
+async function initTimeline() {
+  const container = $("#timeline-container");
   if (!container) return;
 
   try {
-    const res = await fetch("data/timeline.json", { cache: "no-store" });
-    const timeline = await res.json();
-    renderTimeline(timeline);
+    renderTimeline(await loadJSON("data/timeline.json"));
   } catch (err) {
-    console.error("❌ Failed to load timeline.json", err);
-    container.innerHTML = '<div class="error-state">Failed to load timeline.</div>';
+    console.error("Failed to load timeline", err);
+    container.innerHTML = '<li class="state state--error">Timeline could not be loaded.</li>';
   }
 }
 
 function renderTimeline(items) {
-  const container = el("#timeline-container");
-  if (!container) return;
+  const container = $("#timeline-container");
 
-  container.innerHTML = items.map((item) => `
-    <div class="timeline-item">
-      <div class="timeline-content">
-        <span class="timeline-year">${escapeHTML(item.year)}</span>
-        <h3 class="timeline-title">${escapeHTML(item.title)}</h3>
-        <p class="timeline-subtitle">${escapeHTML(item.subtitle)}</p>
-        <p class="timeline-description">${escapeHTML(item.description)}</p>
-        <span class="timeline-type timeline-type--${item.type}">${item.type}</span>
-      </div>
-    </div>
-  `).join("");
-  
-  // Trigger animation on scroll
-  observeTimeline();
+  container.innerHTML = items.map((item) => {
+    const type = String(item.type || "").toLowerCase().replace(/[^a-z-]/g, "");
+    return `
+      <li class="tl-item">
+        <span class="tl-year">${escapeHTML(item.year)}</span>
+        <div class="tl-card">
+          <h3 class="tl-title">${escapeHTML(item.title)}</h3>
+          ${item.subtitle ? `<p class="tl-subtitle">${escapeHTML(item.subtitle)}</p>` : ""}
+          ${item.description ? `<p class="tl-desc">${escapeHTML(item.description)}</p>` : ""}
+          ${type ? `<span class="tl-type tl-type--${type}">${escapeHTML(type)}</span>` : ""}
+        </div>
+      </li>`;
+  }).join("");
+
+  revealOnScroll(container.querySelectorAll(".tl-item"));
 }
 
-function observeTimeline() {
-  const timelineItems = document.querySelectorAll('.timeline-item');
-  
-  // Reset animation for items not yet in view
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+// Items are visible by default; the fade-in is only added when motion is allowed.
+function revealOnScroll(nodes) {
+  if (!("IntersectionObserver" in window)) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+        entry.target.classList.add("is-visible");
+        io.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
-  
-  timelineItems.forEach(item => observer.observe(item));
+  }, { threshold: 0.15 });
+
+  nodes.forEach((n) => {
+    n.classList.add("reveal");
+    io.observe(n);
+  });
 }

@@ -3,212 +3,236 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta property="og:image" content="https://pozzamarco.github.io/assets/images/preview.png">
-  <meta property="og:title" content="Marco Pozza – AI, Neuroscience & Digital Health">
-  <meta property="og:description" content="PhD Student · University of Padua × FBK · Artificial Intelligence for Health and Well-Being">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+
+  <title>Marco Pozza – Machine Learning for Health</title>
+  <meta name="description" content="Marco Pozza, PhD researcher (University of Padua × FBK): machine learning for clinical data, EEG/ECG biosignals, LLMs and COPD exacerbation prediction. Projects, publications and CV." />
+  <link rel="canonical" href="https://pozzamarco.github.io/" />
+
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pozzamarco.github.io/">
+  <meta property="og:title" content="Marco Pozza – Machine Learning for Health">
+  <meta property="og:description" content="Machine learning for clinical data: biosignals (EEG/ECG), LLMs and chronic disease prediction. PhD researcher, University of Padua × FBK.">
+  <meta property="og:image" content="https://pozzamarco.github.io/assets/images/preview.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Marco Pozza – AI, Neuroscience & Digital Health">
-  <meta name="twitter:description" content="PhD Student · University of Padua × FBK · Artificial Intelligence for Health and Well-Being">
+  <meta name="twitter:title" content="Marco Pozza – Machine Learning for Health">
+  <meta name="twitter:description" content="Machine learning for clinical data: biosignals (EEG/ECG), LLMs and chronic disease prediction.">
   <meta name="twitter:image" content="https://pozzamarco.github.io/assets/images/preview.png">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://cdn.jsdelivr.net; base-uri 'self'; form-action 'self';">
-  <title>Marco Pozza – AI, Neuroscience & Digital Health</title>
-  <meta name="description" content="PhD portfolio: AI for chronic diseases, publications, CV, contact." />
+
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="assets/images/favicon.png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" crossorigin="anonymous" />
-  <link rel="stylesheet" href="assets/style.css?v=14" />
-</head>
-<body>
-  <!-- Skip to content for screen readers -->
-  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=15" />
 
-  <!-- Schema.org structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Marco Pozza",
-    "jobTitle": "PhD Student",
-    "affiliation": {
-      "@type": "Organization",
-      "name": "University of Padua"
-    },
-    "alumniOf": {
-      "@type": "Organization",
-      "name": "University of Padua"
-    },
-    "url": "https://pozzamarco.github.io",
+    "jobTitle": "PhD Researcher",
+    "description": "Machine learning for clinical data: biosignals (EEG/ECG), LLMs and chronic disease prediction.",
+    "image": "https://pozzamarco.github.io/assets/images/photo.jpg",
+    "url": "https://pozzamarco.github.io/",
+    "email": "mailto:marco.pozza.3@phd.unipd.it",
+    "affiliation": [
+      { "@type": "CollegeOrUniversity", "name": "University of Padua" },
+      { "@type": "ResearchOrganization", "name": "Fondazione Bruno Kessler" }
+    ],
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of Padua" },
     "sameAs": [
       "https://github.com/PozzaMarco",
       "https://orcid.org/0009-0004-5798-0297",
       "https://www.linkedin.com/in/marco-pozza-3ab072171/",
-      "http://hit.psy.unipd.it/pozza-marco"
+      "https://hit.psy.unipd.it/pozza-marco"
     ],
-    "email": "marco.pozza.3@phd.unipd.it",
-    "knowsAbout": ["Artificial Intelligence", "Neuroscience", "Digital Health", "Machine Learning", "EEG", "COPD"]
+    "knowsAbout": ["Machine Learning", "Deep Learning", "EEG", "ECG", "Large Language Models", "Digital Health", "COPD"]
   }
   </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
   <!-- ===== Nav ===== -->
   <header class="nav">
-    <div class="nav__brand">Marco Pozza</div>
+    <a class="nav__brand" href="#top">Marco Pozza</a>
     <nav class="nav__links" aria-label="Primary">
       <a href="#about">About</a>
-      <a href="#bookshelf">Bookshelf</a>
-      <a href="#timeline">Timeline</a>
-      <a href="#cv">CV</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#experience">Experience</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
 
-  <!-- ===== Hero / Intro ===== -->
-  <section class="hero" id="home">
-    <a id="main-content" tabindex="-1"></a>
-    <img class="hero__photo" src="assets/images/photo.jpg" alt="Portrait of Marco Pozza" loading="eager" />
-    <div class="hero__content">
-      <h1 class="hero__title">AI, Neuroscience & Digital Health</h1>
-      <p class="hero__subtitle">PhD Student — Brain, Mind & Computer Science, University of Padua</p>
-      <p class="hero__tagline">Developing <strong>Artificial Intelligence</strong> solutions for healthcare from brain signals to chronic disease management.</p>
-      <div class="hero__buttons">
-        <a class="btn btn--accent" href="#bookshelf">Explore the Bookshelf</a>
-        <a class="btn btn--ghost" href="#contact">Get in Touch</a>
-      </div>
-    </div>
-    <div class="scroll-indicator" aria-hidden="true">▼ Scroll</div>
-  </section>
+  <main id="main-content" tabindex="-1">
 
-  <!-- ===== Bookshelf (Centerpiece) ===== -->
-  <section class="bookshelf" id="bookshelf" aria-label="Publications Bookshelf">
-    <div class="section-head">
-      <h2>Publications & Research</h2>
-      <p class="muted">Browse the shelf. Select a paper to view details, full text and copy the reference.</p>
-    </div>
-
-    <div class="filters" role="group" aria-label="Filters">
-      <label class="filter">
-        <span>Year</span>
-        <select id="filter-year" aria-label="Filter by year"></select>
-      </label>
-      <label class="filter">
-        <span>Search</span>
-        <input id="filter-query" type="search" placeholder="Title, author, keyword…" aria-label="Search publications" />
-      </label>
-    </div>
-
-    <div class="swiper" id="shelf">
-      <div class="swiper-wrapper" id="shelf-wrapper"><!-- slides injected --></div>
-      <div class="swiper-button-prev" aria-label="Previous"></div>
-      <div class="swiper-button-next" aria-label="Next"></div>
-      <div class="swiper-pagination" aria-hidden="true"></div>
-    </div>
-  </section>
-
-  <!-- ===== About ===== -->
-  <section class="about" id="about">
-    <div class="section-head">
-      <h2>About & Research Focus</h2>
-    </div>
-
-    <p>
-      I am a Ph.D. student in <em>Brain, Mind, and Computer Science</em> at the
-      <strong>University of Padua</strong>, supported by a research grant from
-      <strong>Fondazione Bruno Kessler (FBK)</strong>.
-      I hold an M.Sc. in <em>Artificial Intelligence</em> (2023, Padua) and previously
-      worked on deep learning for EEG-based epilepsy prediction and large language models
-      for cognitive analysis at <em>Ca’ Foscari University of Venice</em>.
-    </p>
-
-    <p>
-      My current doctoral research focuses on <strong>AI-driven prediction and management
-      of chronic diseases</strong>, particularly <strong>Chronic Obstructive Pulmonary
-      Disease (COPD)</strong>. By combining machine learning, human-centered design, and
-      psychological insights, I develop digital health tools that can identify at-risk
-      patients and support personalized prevention and self-management strategies.
-    </p>
-
-    <p>
-      I am also collaborating with <strong>Dr. Cisotto</strong> from the
-      <em>University of Trieste</em> on the evaluation of <strong>hvEEGNet</strong>, a
-      novel model for EEG signal reconstruction. In this project, we investigate the
-      model’s robustness to noise and artifacts following the detection of anomalies in
-      earlier experiments. The collaboration aims to better understand the origin of
-      these inconsistencies and to validate hvEEGNet’s reliability, with plans for a
-      joint publication on its performance and diagnostic applications.
-    </p>
-
-    <p>
-      Beyond my technical work, I am passionate about bridging
-      <strong>artificial intelligence and neuroscience</strong> to improve healthcare
-      accessibility and patient outcomes. I collaborate with research groups across
-      Europe on projects in <strong>brain–computer interaction</strong> and
-      <strong>digital medicine</strong>, aiming to design AI systems that make a
-      tangible impact on people’s well-being.
-    </p>
-  </section>
-
-  <!-- ===== Timeline ===== -->
-  <section class="timeline-section" id="timeline">
-    <div class="section-head">
-      <h2>Research Journey</h2>
-      <p class="muted">Key milestones in my academic and research career</p>
-    </div>
-
-    <div class="timeline" id="timeline-container">
-      <!-- Timeline items will be injected here -->
-    </div>
-  </section>
-
-  <!-- ===== CV ===== -->
-  <section class="cv" id="cv">
-    <div class="section-head">
-      <h2>Curriculum Vitae</h2>
-    </div>
-    <p>Download my full CV for details on education, skills, awards, and experience.</p>
-    <a class="btn btn--ghost" href="assets/Marco_Pozza_CV.pdf" download>Download CV (PDF)</a>
-  </section>
-
-  <!-- ===== Contact ===== -->
-  <section class="contact" id="contact">
-    <div class="section-head">
-      <h2>Contact</h2>
-    </div>
-    <ul class="contact__list" aria-label="Contact links">
-      <li><a href="mailto:marco.pozza.3@phd.unipd.it">marco.pozza.3@phd.unipd.it</a></li>
-      <li><a href="https://hit.psy.unipd.it/pozza-marco" target="_blank" rel="noopener">University Page</a></li>
-      <li><a href="https://github.com/PozzaMarco" target="_blank" rel="noopener">GitHub</a></li>
-      <li><a href="https://orcid.org/0009-0004-5798-0297" target="_blank" rel="noopener">ORCID</a></li>
-      <li><a href="https://www.linkedin.com/in/marco-pozza-3ab072171/" target="_blank" rel="noopener">LinkedIn</a></li>
-    </ul>
-  </section>
-
-  <!-- ===== Footer ===== -->
-  <footer class="footer">
-    <p>© <span id="year"></span> Marco Pozza · Built with ♥ and GitHub Pages</p>
-  </footer>
-
-  <!-- Modal (Paper details) -->
-  <div class="modal" id="paper-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="paper-title">
-    <div class="modal__backdrop" data-close-modal></div>
-    <div class="modal__dialog" role="document">
-      <button class="modal__close" aria-label="Close" data-close-modal>&times;</button>
-      <div class="modal__content">
-        <h3 id="paper-title"></h3>
-        <p id="paper-authors" class="muted"></p>
-        <p id="paper-venue" class="muted"></p>
-        <p id="paper-abstract"></p>
-        <div class="modal__links">
-          <a id="paper-link" class="btn btn--accent" target="_blank" rel="noopener">Full text / Publisher ↗</a>
-          <button id="copy-bibtex" class="btn btn--ghost">Copy BibTeX</button>
+    <!-- ===== Hero ===== -->
+    <section class="hero" id="top">
+      <img class="hero__photo" src="assets/images/photo.jpg" alt="Portrait of Marco Pozza"
+           width="170" height="170" fetchpriority="high" />
+      <div class="hero__content">
+        <h1 class="hero__name">Marco Pozza</h1>
+        <!-- TODO: allinea questa riga alla headline di LinkedIn -->
+        <p class="hero__headline">Machine learning for clinical data: biosignals (EEG/ECG), LLMs and chronic disease prediction</p>
+        <p class="hero__role">PhD researcher · Brain, Mind &amp; Computer Science, University of Padua × Fondazione Bruno Kessler</p>
+        <div class="hero__buttons">
+          <a class="btn btn--accent" href="assets/Marco_Pozza_CV.pdf" download>Download CV</a>
+          <a class="btn btn--ghost" href="https://www.linkedin.com/in/marco-pozza-3ab072171/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn--ghost" href="https://github.com/PozzaMarco" target="_blank" rel="noopener">GitHub</a>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js" crossorigin="anonymous"></script>
-  <script src="assets/script.js?v=6"></script>
+    <!-- ===== About ===== -->
+    <section id="about" aria-labelledby="about-title">
+      <div class="section-head"><h2 id="about-title">About</h2></div>
+      <div class="about__grid">
+        <div class="prose">
+          <p>
+            I am a PhD researcher in <em>Brain, Mind &amp; Computer Science</em> at the
+            <strong>University of Padua</strong>, funded by and working with
+            <strong>Fondazione Bruno Kessler (FBK)</strong>. I build machine learning models for
+            clinical data, with a focus on predicting exacerbations of <strong>Chronic Obstructive
+            Pulmonary Disease (COPD)</strong> and on how clinicians come to trust AI-generated outputs.
+          </p>
+          <p>
+            Before the PhD I worked at <em>Ca’ Foscari University of Venice</em> on deep learning for
+            EEG-based epilepsy prediction and on large language models for cognitive analysis,
+            after an M.Sc. in Artificial Intelligence (University of Padua, 2023).
+          </p>
+        </div>
+        <ul class="facts">
+          <li><span class="facts__label">Research stay</span>FORTH, Heraklion (Greece), 2026</li>
+          <!-- TODO: nome completo della collaboratrice + link alla sua pagina -->
+          <li><span class="facts__label">Collaboration</span>University of Trieste: robustness evaluation of hvEEGNet, an EEG reconstruction model</li>
+          <li><span class="facts__label">Service</span>Arqus Ambassador · Peer reviewer</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== Projects ===== -->
+    <section id="projects" aria-labelledby="projects-title">
+      <div class="section-head">
+        <h2 id="projects-title">Projects</h2>
+        <p class="muted">What I am working on, and what it involves.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <h3>COPD exacerbation prediction</h3>
+          <p>Models that identify patients at risk of COPD exacerbations, to support prevention and self-management.</p>
+          <ul class="tags"><li>Machine learning</li><li>Multimodal data</li><li>Digital health</li></ul>
+          <!-- TODO: link a paper/preprint quando disponibile -->
+        </article>
+        <article class="card">
+          <h3>Clinician trust in LLM-generated notes</h3>
+          <p>A study, which I lead as principal investigator, of how pulmonologists judge the reliability of LLM-generated clinical notes for COPD exacerbation prediction.</p>
+          <ul class="tags"><li>LLMs</li><li>Human–AI interaction</li><li>User study</li></ul>
+        </article>
+        <article class="card">
+          <h3>ECG-JEPA encoder</h3>
+          <p>A pipeline that integrates the self-supervised ECG-JEPA model to turn raw ECG signals into representations for downstream clinical prediction.</p>
+          <ul class="tags"><li>Self-supervised learning</li><li>ECG</li><li>Python</li></ul>
+          <!-- TODO: sostituisci con l'URL del repo quando è pulito -->
+          <a class="card__link" href="https://github.com/PozzaMarco" target="_blank" rel="noopener">Code on GitHub ↗</a>
+        </article>
+        <article class="card">
+          <h3>Deep learning for EEG</h3>
+          <p>A systematic review of deep learning for epileptic seizure prediction, and an evaluation of EEG reconstruction models under noise and artifacts.</p>
+          <ul class="tags"><li>EEG</li><li>Deep learning</li><li>Systematic review</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== Skills ===== -->
+    <!-- TODO: verifica e completa: metti solo ciò che sai difendere in un colloquio -->
+    <section id="skills" aria-labelledby="skills-title">
+      <div class="section-head"><h2 id="skills-title">Skills</h2></div>
+      <div class="skills">
+        <div class="skills__group">
+          <h3>Machine learning</h3>
+          <p>Deep learning · Self-supervised learning · LLMs · Biosignal and time-series modelling</p>
+        </div>
+        <div class="skills__group">
+          <h3>Tools</h3>
+          <p>Python · PyTorch · Git</p>
+        </div>
+        <div class="skills__group">
+          <h3>Research</h3>
+          <p>Study design with clinicians · Ethics submissions · Scientific writing · Peer review</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Publications ===== -->
+    <section id="publications" aria-labelledby="pubs-title">
+      <div class="section-head">
+        <h2 id="pubs-title">Publications</h2>
+        <p class="muted">Select a title for the abstract, full text and BibTeX.</p>
+      </div>
+
+      <div class="filters" role="search">
+        <label class="filter">
+          <span>Year</span>
+          <select id="filter-year"></select>
+        </label>
+        <label class="filter filter--grow">
+          <span>Search</span>
+          <input id="filter-query" type="search" placeholder="Title, author, venue…" />
+        </label>
+      </div>
+      <p class="muted small" id="pub-count" aria-live="polite"></p>
+
+      <ol class="pub-list" id="pub-list"></ol>
+      <noscript>
+        <p>The full list of publications is on
+          <a href="https://orcid.org/0009-0004-5798-0297">ORCID</a>.</p>
+      </noscript>
+    </section>
+
+    <!-- ===== Experience ===== -->
+    <section id="experience" aria-labelledby="exp-title">
+      <div class="section-head"><h2 id="exp-title">Experience &amp; education</h2></div>
+      <ol class="timeline" id="timeline-container"></ol>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="contact" aria-labelledby="contact-title">
+      <div class="section-head"><h2 id="contact-title">Contact</h2></div>
+      <ul class="contact__list">
+        <li><a href="mailto:marco.pozza.3@phd.unipd.it">marco.pozza.3@phd.unipd.it</a></li>
+        <!-- TODO: aggiungi un'email personale (quella @phd.unipd.it scade con il dottorato) -->
+        <li><a href="https://www.linkedin.com/in/marco-pozza-3ab072171/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/PozzaMarco" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://orcid.org/0009-0004-5798-0297" target="_blank" rel="noopener">ORCID</a></li>
+        <li><a href="https://hit.psy.unipd.it/pozza-marco" target="_blank" rel="noopener">University page</a></li>
+      </ul>
+      <p>
+        <a class="btn btn--ghost" href="assets/Marco_Pozza_CV.pdf" download>Download CV (PDF)</a>
+        <!-- TODO: <span class="muted small">Last updated: mese anno</span> -->
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Marco Pozza</p>
+  </footer>
+
+  <!-- Paper details -->
+  <dialog class="modal" id="paper-modal" aria-labelledby="paper-title">
+    <div class="modal__content">
+      <button class="modal__close" type="button" aria-label="Close" data-close-modal>&times;</button>
+      <h3 id="paper-title"></h3>
+      <p id="paper-authors" class="muted"></p>
+      <p id="paper-venue" class="muted"></p>
+      <p id="paper-abstract"></p>
+      <div class="modal__links">
+        <a id="paper-link" class="btn btn--accent" target="_blank" rel="noopener">Full text ↗</a>
+        <button id="copy-bibtex" class="btn btn--ghost" type="button">Copy BibTeX</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="assets/script.js?v=7"></script>
 </body>
 </html>
