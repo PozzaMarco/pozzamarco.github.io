@@ -9,7 +9,7 @@
   {
     "year": "2025–Present",
     "title": "Research Collaboration on EEG Signal Reconstruction",
-    "subtitle": "University of Trieste · with Giulia Cisotto",
+    "subtitle": "WavesLab, University of Trieste · PI: Giulia Cisotto",
     "description": "Evaluating the robustness of hvEEGNet, a deep learning model for reconstructing corrupted EEG signals, under noise and artifacts.",
     "type": "collaboration"
   },
@@ -17,7 +17,7 @@
     "year": "2024–Present",
     "title": "PhD Candidate in Brain, Mind and Computer Science",
     "subtitle": "University of Padua × Fondazione Bruno Kessler (FBK)",
-    "description": "Doctoral research on AI for chronic disease care, focused on COPD: multimodal deep learning on EHR, ECG, chest X-rays and clinical notes to predict hospital readmission, and a study with pulmonologists on trust in LLM-generated clinical notes.",
+    "description": "Doctoral research on AI for chronic disease care, focused on COPD: multimodal deep learning on EHR, ECG, chest X-rays and clinical notes to predict hospital readmission, and an ethics-approved study with pulmonologists and GPs on how LLM-generated explanations affect clinician trust.",
     "type": "position"
   },
   {
