@@ -1,44 +1,51 @@
 [
   {
-  "year": "2025-Present",
-  "title": "Collaboration on hvEEGNet Model",
-  "subtitle": "University of Trieste - Dr. Cisotto",
-  "description": "Evaluating novel EEG signal reconstruction model's robustness to noise and artifacts. Joint publication planned on performance and diagnostic applications.",
-  "type": "collaboration"
+    "year": "2026",
+    "title": "Visiting Researcher",
+    "subtitle": "FORTH – Institute of Computer Science · Heraklion, Greece · Apr–Jun 2026 · Supervisor: Vangelis Sakkalis",
+    "description": "Research design and technical groundwork for a multimodal ML monitoring project on idiopathic pulmonary fibrosis and RA-associated interstitial lung disease. Co-developed a pipeline for reconstructing corrupted biosignal recordings, designed a multi-task extension of the PULSE model for wearable PPG data, and refactored a MIMIC-IV data pipeline into a working training baseline.",
+    "type": "collaboration"
   },
   {
-    "year": "2024-Present",
-    "title": "PhD in Brain, Mind, and Computer Science",
+    "year": "2025–Present",
+    "title": "Research Collaboration on EEG Signal Reconstruction",
+    "subtitle": "University of Trieste · with Giulia Cisotto",
+    "description": "Evaluating the robustness of hvEEGNet, a deep learning model for reconstructing corrupted EEG signals, under noise and artifacts.",
+    "type": "collaboration"
+  },
+  {
+    "year": "2024–Present",
+    "title": "PhD Candidate in Brain, Mind and Computer Science",
     "subtitle": "University of Padua × Fondazione Bruno Kessler (FBK)",
-    "description": "Doctoral research on AI-driven prediction and management of chronic diseases, particularly COPD. Developing digital health tools combining machine learning, human-centered design, and psychological insights.",
+    "description": "Doctoral research on AI for chronic disease care, focused on COPD: multimodal deep learning on EHR, ECG, chest X-rays and clinical notes to predict hospital readmission, and a study with pulmonologists on trust in LLM-generated clinical notes.",
     "type": "position"
   },
   {
     "year": "2024",
-    "title": "AI Researcher Assistant ",
+    "title": "Research Collaborator in AI",
     "subtitle": "University of Padua",
-    "description": "Conducted a comprehensive systematic review of AI-based seizure forecasting systems, focusing on patient-independent testing to rigorously evaluate existing approaches and identify key challenges and opportunities for future research.",
+    "description": "Systematic review of AI-based epileptic seizure forecasting with patient-independent evaluation: literature search on PubMed, Scopus and Web of Science, quality assessment with PRISMA 2020, NHLBI and ROBIS, and a standardised signal-processing pipeline (published in Journal of Neural Engineering).",
     "type": "collaboration"
   },
   {
     "year": "2024",
     "title": "AI Researcher in Generative AI and NLP",
-    "subtitle": "University Ca'Foscari - Venice",
-    "description": "Developing innovative AI solutions focused on enhancing knowledge management and information retrieval, my recent work culminated in a Retrieval Augmented Generation (RAG) system that efficiently extracts and synthesizes information from large datasets to streamline decision-making processes.",
+    "subtitle": "Ca’ Foscari University of Venice",
+    "description": "Built an end-to-end Retrieval-Augmented Generation (RAG) system for knowledge management, from retrieval over a large document base to a web interface (LangChain, Elasticsearch, Flask, React).",
     "type": "position"
   },
   {
-    "year": "2019-2023",
+    "year": "2019–2023",
     "title": "M.Sc. in Artificial Intelligence",
     "subtitle": "University of Padua",
-    "description": "Specialized in machine learning and neural networks with focus on healthcare applications. Thesis on forecasting epileptic seizures from electroencephalograms using Deep Neural Networks.",
+    "description": "Machine learning and neural networks with a focus on healthcare. Thesis on forecasting epileptic seizures from EEG with deep neural networks (published at BIOSTEC 2024).",
     "type": "education"
   },
   {
-  "year": "2014-2020",
-  "title": "Foundation in Computer Science, Software Development, and AI",
-  "subtitle": "University of Padua and various work/internship experiences",
-  "description": "Established a solid foundation in core Computer Science principles, including the Bachelor's degree in Computer Science (2014-2018). Gained practical experience in Full-stack software development (2018-2020) and specialized through an AI Engineer internship focused on anomaly detection and face re-identification using Python and CNNs (2020). Also developed identity and access management prototypes using Blockchain technologies and various programming languages as a Junior Software Developer.",
-  "type": "summary"
+    "year": "2014–2020",
+    "title": "B.Sc. in Computer Science and Industry Experience",
+    "subtitle": "University of Padua · Software development and AI internship",
+    "description": "B.Sc. in Computer Science (2014–2018), then full-stack software development (2018–2020), blockchain-based identity and access management prototypes as a junior developer, and an AI engineering internship on anomaly detection and face re-identification with CNNs (2020).",
+    "type": "summary"
   }
 ]

@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
 
-  <title>Marco Pozza – Machine Learning for Health</title>
+  <title>Marco Pozza – AI for Healthcare</title>
   <meta name="description" content="Marco Pozza, PhD researcher (University of Padua × FBK): machine learning for clinical data, EEG/ECG biosignals, LLMs and COPD exacerbation prediction. Projects, publications and CV." />
   <link rel="canonical" href="https://pozzamarco.github.io/" />
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pozzamarco.github.io/">
-  <meta property="og:title" content="Marco Pozza – Machine Learning for Health">
+  <meta property="og:title" content="Marco Pozza – AI for Healthcare">
   <meta property="og:description" content="Machine learning for clinical data: biosignals (EEG/ECG), LLMs and chronic disease prediction. PhD researcher, University of Padua × FBK.">
   <meta property="og:image" content="https://pozzamarco.github.io/assets/images/preview.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Marco Pozza – Machine Learning for Health">
+  <meta name="twitter:title" content="Marco Pozza – AI for Healthcare">
   <meta name="twitter:description" content="Machine learning for clinical data: biosignals (EEG/ECG), LLMs and chronic disease prediction.">
   <meta name="twitter:image" content="https://pozzamarco.github.io/assets/images/preview.png">
 
@@ -34,7 +34,7 @@
     "description": "Machine learning for clinical data: biosignals (EEG/ECG), LLMs and chronic disease prediction.",
     "image": "https://pozzamarco.github.io/assets/images/photo.jpg",
     "url": "https://pozzamarco.github.io/",
-    "email": "mailto:marco.pozza.3@phd.unipd.it",
+    "email": "mailto:pozza.marco95@gmail.com",
     "affiliation": [
       { "@type": "CollegeOrUniversity", "name": "University of Padua" },
       { "@type": "ResearchOrganization", "name": "Fondazione Bruno Kessler" }
@@ -73,11 +73,11 @@
            width="170" height="170" fetchpriority="high" />
       <div class="hero__content">
         <h1 class="hero__name">Marco Pozza</h1>
-        <!-- TODO: allinea questa riga alla headline di LinkedIn -->
-        <p class="hero__headline">Machine learning for clinical data: biosignals (EEG/ECG), LLMs and chronic disease prediction</p>
-        <p class="hero__role">PhD researcher · Brain, Mind &amp; Computer Science, University of Padua × Fondazione Bruno Kessler</p>
+        <p class="hero__headline">PhD Candidate in AI for Healthcare</p>
+        <p class="hero__focus">Deep learning for biosignals (ECG, EEG) · LLM evaluation with clinicians · Multimodal models</p>
+        <p class="hero__role">Brain, Mind &amp; Computer Science · University of Padua × Fondazione Bruno Kessler</p>
         <div class="hero__buttons">
-          <a class="btn btn--accent" href="assets/Marco_Pozza_CV.pdf" download>Download CV</a>
+          <!-- <a class="btn btn--accent" href="assets/Marco_Pozza_CV.pdf" download>Download CV</a> -->
           <a class="btn btn--ghost" href="https://www.linkedin.com/in/marco-pozza-3ab072171/" target="_blank" rel="noopener">LinkedIn</a>
           <a class="btn btn--ghost" href="https://github.com/PozzaMarco" target="_blank" rel="noopener">GitHub</a>
         </div>
@@ -90,22 +90,21 @@
       <div class="about__grid">
         <div class="prose">
           <p>
-            I am a PhD researcher in <em>Brain, Mind &amp; Computer Science</em> at the
+            I am a PhD candidate in <em>Brain, Mind &amp; Computer Science</em> at the
             <strong>University of Padua</strong>, funded by and working with
             <strong>Fondazione Bruno Kessler (FBK)</strong>. I build machine learning models for
-            clinical data, with a focus on predicting exacerbations of <strong>Chronic Obstructive
+            clinical data, with a focus on multimodal prediction of hospital readmission in <strong>Chronic Obstructive
             Pulmonary Disease (COPD)</strong> and on how clinicians come to trust AI-generated outputs.
           </p>
           <p>
-            Before the PhD I worked at <em>Ca’ Foscari University of Venice</em> on deep learning for
-            EEG-based epilepsy prediction and on large language models for cognitive analysis,
+            Before the PhD I collaborated on EEG-based seizure prediction research at the University of Padua
+            and built RAG systems for knowledge management at <em>Ca’ Foscari University of Venice</em>,
             after an M.Sc. in Artificial Intelligence (University of Padua, 2023).
           </p>
         </div>
         <ul class="facts">
           <li><span class="facts__label">Research stay</span>FORTH, Heraklion (Greece), 2026</li>
-          <!-- TODO: nome completo della collaboratrice + link alla sua pagina -->
-          <li><span class="facts__label">Collaboration</span>University of Trieste: robustness evaluation of hvEEGNet, an EEG reconstruction model</li>
+          <li><span class="facts__label">Collaboration</span>With <a href="https://sites.google.com/view/giulia-cisotto/home-page" target="_blank" rel="noopener">Giulia Cisotto</a> (University of Trieste): robustness evaluation of hvEEGNet, an EEG reconstruction model</li>
           <li><span class="facts__label">Service</span>Arqus Ambassador · Peer reviewer</li>
         </ul>
       </div>
@@ -119,50 +118,64 @@
       </div>
       <div class="cards">
         <article class="card">
-          <h3>COPD exacerbation prediction</h3>
-          <p>Models that identify patients at risk of COPD exacerbations, to support prevention and self-management.</p>
-          <ul class="tags"><li>Machine learning</li><li>Multimodal data</li><li>Digital health</li></ul>
-          <!-- TODO: link a paper/preprint quando disponibile -->
+          <span class="card__status">2 papers in preparation</span>
+          <h3>Multimodal prediction of COPD readmission</h3>
+          <p>Fusing structured EHR, ECG, chest X-rays and clinical notes from MIMIC-IV to predict 30-day hospital readmission in COPD patients, using frozen pre-trained encoders (ECG-JEPA, BiomedCLIP, Bio_ClinicalBERT) and gated fusion. The focus is rigorous evaluation: strict temporal leakage control, calibration, informative missingness and statistical power.</p>
+          <ul class="tags"><li>Multimodal deep learning</li><li>MIMIC-IV</li><li>Clinical prediction</li></ul>
+          <a class="card__link" href="https://www.mdpi.com/2227-9032/13/23/3037" target="_blank" rel="noopener">Related umbrella review (Healthcare, 2025) ↗</a>
         </article>
         <article class="card">
+          <span class="card__status">Ongoing study</span>
           <h3>Clinician trust in LLM-generated notes</h3>
-          <p>A study, which I lead as principal investigator, of how pulmonologists judge the reliability of LLM-generated clinical notes for COPD exacerbation prediction.</p>
+          <p>An ethics-approved study, which I lead as principal investigator, with pulmonologists and GPs on how LLM-generated explanations affect clinician trust in machine learning predictions for COPD.</p>
           <ul class="tags"><li>LLMs</li><li>Human–AI interaction</li><li>User study</li></ul>
         </article>
         <article class="card">
-          <h3>ECG-JEPA encoder</h3>
-          <p>A pipeline that integrates the self-supervised ECG-JEPA model to turn raw ECG signals into representations for downstream clinical prediction.</p>
-          <ul class="tags"><li>Self-supervised learning</li><li>ECG</li><li>Python</li></ul>
-          <!-- TODO: sostituisci con l'URL del repo quando è pulito -->
-          <a class="card__link" href="https://github.com/PozzaMarco" target="_blank" rel="noopener">Code on GitHub ↗</a>
+          <span class="card__status">Published</span>
+          <h3>EEG seizure forecasting</h3>
+          <p>M.Sc. thesis work on forecasting epileptic seizures from long-term EEG, comparing recurrent (LSTM) and convolutional architectures, followed by a systematic review of cross-patient seizure prediction.</p>
+          <ul class="tags"><li>EEG</li><li>Deep learning</li><li>Systematic review</li></ul>
+          <a class="card__link" href="#publications">See publications ↓</a>
         </article>
         <article class="card">
-          <h3>Deep learning for EEG</h3>
-          <p>A systematic review of deep learning for epileptic seizure prediction, and an evaluation of EEG reconstruction models under noise and artifacts.</p>
-          <ul class="tags"><li>EEG</li><li>Deep learning</li><li>Systematic review</li></ul>
+          <span class="card__status">Ongoing collaboration</span>
+          <h3>EEG signal reconstruction</h3>
+          <p>With Giulia Cisotto (University of Trieste): testing the robustness of hvEEGNet, a deep learning model for reconstructing corrupted EEG signals, under noise and artifacts.</p>
+          <ul class="tags"><li>EEG</li><li>Deep learning</li><li>Model evaluation</li></ul>
         </article>
       </div>
     </section>
 
     <!-- ===== Skills ===== -->
-    <!-- TODO: verifica e completa: metti solo ciò che sai difendere in un colloquio -->
     <section id="skills" aria-labelledby="skills-title">
       <div class="section-head"><h2 id="skills-title">Skills</h2></div>
       <div class="skills">
         <div class="skills__group">
           <h3>Machine learning</h3>
-          <p>Deep learning · Self-supervised learning · LLMs · Biosignal and time-series modelling</p>
+          <p>PyTorch · PyTorch Lightning · TensorFlow/Keras · scikit-learn · Hugging Face Transformers · Optuna</p>
         </div>
         <div class="skills__group">
-          <h3>Tools</h3>
-          <p>Python · PyTorch · Git</p>
+          <h3>LLMs</h3>
+          <p>Large-scale benchmarking of open and commercial models (Qwen, Mistral and others) · Prompting · Fine-tuning · RAG · LangChain · Ollama · OpenRouter</p>
+        </div>
+        <div class="skills__group">
+          <h3>Biosignals &amp; data</h3>
+          <p>EEG · ECG · MNE · NeuroKit2 · wfdb · SciPy · pandas · NumPy · SQL (PostgreSQL, MongoDB)</p>
+        </div>
+        <div class="skills__group">
+          <h3>Programming &amp; tools</h3>
+          <p><strong>Python</strong> · also Java, C/C++, C#, JavaScript/TypeScript, React, MATLAB · Git · Docker · Flask · Elasticsearch · Linux · Conda · uv · Jupyter · W&amp;B/MLflow · LaTeX</p>
         </div>
         <div class="skills__group">
           <h3>Research</h3>
-          <p>Study design with clinicians · Ethics submissions · Scientific writing · Peer review</p>
+          <p>Systematic reviews (PRISMA) · User studies with clinicians · Statistical analysis · Ethics &amp; GDPR · Peer review</p>
+        </div>
+        <div class="skills__group">
+          <h3>Languages</h3>
+          <p>Italian (native) · English (C1)</p>
         </div>
       </div>
-    </section>
+    </section>>
 
     <!-- ===== Publications ===== -->
     <section id="publications" aria-labelledby="pubs-title">
@@ -200,17 +213,13 @@
     <section id="contact" aria-labelledby="contact-title">
       <div class="section-head"><h2 id="contact-title">Contact</h2></div>
       <ul class="contact__list">
+        <li><a href="mailto:pozza.marco95@gmail.com">pozza.marco95@gmail.com</a></li>
         <li><a href="mailto:marco.pozza.3@phd.unipd.it">marco.pozza.3@phd.unipd.it</a></li>
-        <!-- TODO: aggiungi un'email personale (quella @phd.unipd.it scade con il dottorato) -->
         <li><a href="https://www.linkedin.com/in/marco-pozza-3ab072171/" target="_blank" rel="noopener">LinkedIn</a></li>
         <li><a href="https://github.com/PozzaMarco" target="_blank" rel="noopener">GitHub</a></li>
         <li><a href="https://orcid.org/0009-0004-5798-0297" target="_blank" rel="noopener">ORCID</a></li>
         <li><a href="https://hit.psy.unipd.it/pozza-marco" target="_blank" rel="noopener">University page</a></li>
       </ul>
-      <p>
-        <a class="btn btn--ghost" href="assets/Marco_Pozza_CV.pdf" download>Download CV (PDF)</a>
-        <!-- TODO: <span class="muted small">Last updated: mese anno</span> -->
-      </p>
     </section>
   </main>
 
