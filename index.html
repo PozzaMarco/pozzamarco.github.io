@@ -22,7 +22,7 @@
   <link rel="icon" type="image/png" href="assets/images/favicon.png">
   <link rel="preload" href="assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/playfair-display-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/style.css?v=16" />
+  <link rel="stylesheet" href="assets/style.css?v=17" />
 
   <script type="application/ld+json">
   {
@@ -117,10 +117,12 @@
       </div>
       <div class="cards">
         <article class="card">
-          <span class="card__status">2 papers in preparation</span>
+          <span class="card__status">Preprint available</span>
           <h3>Multimodal prediction of COPD readmission</h3>
-          <p>Fusing structured EHR, ECG, chest X-rays and clinical notes from MIMIC-IV to predict 30-day hospital readmission in COPD patients, using frozen pre-trained encoders (ECG-JEPA, BiomedCLIP, Bio_ClinicalBERT) and gated fusion. The focus is rigorous evaluation: strict temporal leakage control, calibration, informative missingness and statistical power.</p>
+          <p>Fusing structured EHR, ECG, chest X-rays and clinical notes from MIMIC-IV to predict 30-day hospital readmission in COPD patients, using frozen pre-trained encoders (ECG-JEPA, BiomedCLIP, Bio_ClinicalBERT) and three fusion architectures. The focus is rigorous evaluation: temporal-leakage auditing, calibration, informative missingness and statistical power.</p>
+          <p>Main finding so far: once leakage is corrected, structured EHR data alone matches multimodal fusion in both discrimination and calibration.</p>
           <ul class="tags"><li>Multimodal deep learning</li><li>MIMIC-IV</li><li>Clinical prediction</li></ul>
+          <a class="card__link" href="https://www.medrxiv.org/content/10.64898/2026.10.14.26365503v1" target="_blank" rel="noopener">Preprint (medRxiv, 2026) ↗</a>
           <a class="card__link" href="https://www.mdpi.com/2227-9032/13/23/3037" target="_blank" rel="noopener">Related umbrella review (Healthcare, 2025) ↗</a>
         </article>
         <article class="card">
